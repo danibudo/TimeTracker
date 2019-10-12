@@ -41,8 +41,6 @@ public final class Clock {
         Date oldTime = currentTime;
         currentTime = new Date();
         support.firePropertyChange("currentTime", oldTime, currentTime);
-
-        System.out.println(currentTime);
     }
 
     void run() {

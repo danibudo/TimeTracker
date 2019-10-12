@@ -4,8 +4,14 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 public class Project implements Activity {
-    private String name;
+    private Project ownerProject;
+    public String name;
     private List<Activity> activities;
+
+    public Project(final String projectName, final Project project) {
+        ownerProject = project;
+        name = projectName;
+    }
 
     @Override
     public void printTime() {
@@ -14,7 +20,11 @@ public class Project implements Activity {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        
+
+    }
+
+    public Project getOwner () {
+        return ownerProject;
     }
 
     public void addActivity(final Activity activity) {

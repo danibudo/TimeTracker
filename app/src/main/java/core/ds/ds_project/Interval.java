@@ -4,10 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class Interval implements PropertyChangeListener {
+    private Task ownerTask;
     private long startTime;
     private long endTime;
 
-    public Interval(final long start, final long finish) {
+    public Interval(final long start, final long finish, final Task task) {
+        ownerTask = task;
         startTime = start;
         endTime = finish;
     }
@@ -28,8 +30,10 @@ public class Interval implements PropertyChangeListener {
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
         //Temporary solution for testing purposes
-        if (getRemainingTime() > 0 && getRemainingTime() <= getDuration()) {
-            System.out.println(getRemainingTime() / 1000 + "seconds remaining");
+        if (getRemainingTime() > 0 && getRemainingTime() < getDuration()) {
+            System.out.println("\"" + ownerTask.getOwner().name + "\" project:");
+            System.out.println("\"" + ownerTask.name + "\" task:");
+            System.out.println(getRemainingTime() / 1000 + " seconds remaining ...\n");
         }
     }
 
