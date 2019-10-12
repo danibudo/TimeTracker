@@ -11,11 +11,19 @@ public final class Clock {
     private Date currentTime;
     private PropertyChangeSupport support;
     private ScheduledExecutorService executor;
+    private static Clock instance;
 
-    Clock() {
+    private Clock() {
         currentTime = new Date();
         support = new PropertyChangeSupport(this);
         executor = Executors.newSingleThreadScheduledExecutor();
+    }
+
+    public static Clock getInstance() {
+
+        if (instance == null) instance = new Clock();
+
+        return instance;
     }
 
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
