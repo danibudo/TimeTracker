@@ -8,12 +8,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class Clock {
-    private Date date;
+    private Date currentTime;
     private PropertyChangeSupport support;
     private ScheduledExecutorService executor;
 
     Clock() {
-        date = new Date();
+        currentTime = new Date();
         support = new PropertyChangeSupport(this);
         executor = Executors.newSingleThreadScheduledExecutor();
     }
@@ -26,8 +26,11 @@ public final class Clock {
     }
 
     private void tick() {
-        date = new Date();
-        System.out.println(date);
+        Date oldTime = currentTime;
+        currentTime = new Date();
+        support.firePropertyChange("currentTime", oldTime, currentTime);
+
+        System.out.println(currentTime);
     }
 
     void run() {
