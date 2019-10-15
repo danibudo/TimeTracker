@@ -23,6 +23,23 @@ public class Task implements Activity {
 
     }
 
+    public void addActivity(final Activity activity) {
+        //this is leaf node so this method is not applicable
+    }
+
+    public void removeActivity(final Activity activity) {
+        //this is leaf node so this method is not applicable
+    }
+
+    public Activity getChild(final int i) {
+        //this is leaf node so this method is not applicable
+        return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public Project getOwner () {
         return ownerProject;
     }
@@ -35,7 +52,5 @@ public class Task implements Activity {
         intervals.remove(interval);
     }
 
-    //public void startTask() {}
 
-    //public void getIntervals() {}
 }

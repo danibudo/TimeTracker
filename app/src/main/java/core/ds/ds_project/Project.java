@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Project implements Activity {
     private Project ownerProject;
-    public String name;
+    private String name;
     private List<Activity> activities;
 
     public Project(final String projectName, final Project project) {
@@ -33,6 +33,14 @@ public class Project implements Activity {
 
     public void removeActivity(final Activity activity) {
         activities.remove(activity);
+    }
+
+    public Activity getChild(final int i) {
+        return activities.get(i);
+    }
+
+    public String getName() {
+        return name;
     }
 
   //public void getActivities(){ }
