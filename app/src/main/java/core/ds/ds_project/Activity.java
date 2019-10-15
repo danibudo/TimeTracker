@@ -13,7 +13,7 @@ public interface Activity extends PropertyChangeListener {
 
     String getName();
 
-    void printTime();
+    void print();
 
     Project getOwner();
 

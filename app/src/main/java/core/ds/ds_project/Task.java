@@ -8,13 +8,13 @@ public class Task implements Activity {
     public String name;
     private List<Interval> intervals;
 
-    public Task(final String taskName, final Project project) {
-        ownerProject = project;
+    public Task(final String taskName) {
         name = taskName;
     }
 
     @Override
-    public void printTime() {
+    public void print() {
+        System.out.println("Task = " + getName());
 
     }
 
