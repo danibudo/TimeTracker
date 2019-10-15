@@ -5,7 +5,21 @@ import java.beans.PropertyChangeListener;
 
 public interface Activity extends PropertyChangeListener {
 
-    void printTime();
+    void addActivity(Activity activity);
+
+    void removeActivity(Activity activity);
+
+    Activity getChild(int i);
+
+    String getName();
+
+    void print();
+
+    //void addInterval(Interval interval);
+
+    //void removeInterval(Interval interval);
+
+    Project getOwner();
 
     @Override
     void propertyChange(PropertyChangeEvent propertyChangeEvent);

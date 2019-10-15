@@ -1,20 +1,22 @@
 package core.ds.ds_project;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task implements Activity {
     private Project ownerProject;
-    public String name;
+    private String name;
     private List<Interval> intervals;
 
-    public Task(final String taskName, final Project project) {
-        ownerProject = project;
-        name = taskName;
+    public Task(final String taskName) {
+        this.name = taskName;
+        this.intervals = new ArrayList<>();
     }
 
     @Override
-    public void printTime() {
+    public void print() {
+        System.out.println("Task = " + getName());
 
     }
 
@@ -23,7 +25,24 @@ public class Task implements Activity {
 
     }
 
-    public Project getOwner () {
+    public void addActivity(final Activity activity) {
+        //this is leaf node so this method is not applicable
+    }
+
+    public void removeActivity(final Activity activity) {
+        //this is leaf node so this method is not applicable
+    }
+
+    public Activity getChild(final int i) {
+        //this is leaf node so this method is not applicable
+        return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Project getOwner() {
         return ownerProject;
     }
 
@@ -35,7 +54,5 @@ public class Task implements Activity {
         intervals.remove(interval);
     }
 
-    //public void startTask() {}
 
-    //public void getIntervals() {}
 }

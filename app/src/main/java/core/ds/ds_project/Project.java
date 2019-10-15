@@ -1,6 +1,8 @@
 package core.ds.ds_project;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Project implements Activity {
@@ -8,13 +10,24 @@ public class Project implements Activity {
     public String name;
     private List<Activity> activities;
 
-    public Project(final String projectName, final Project project) {
-        ownerProject = project;
+    public Project(final String projectName) {
+
         name = projectName;
+        this.activities = new ArrayList<>();
     }
 
     @Override
-    public void printTime() {
+    public void print() {
+        System.out.println("-----------------------");
+        System.out.println("Project = " + getName());
+        System.out.println("-----------------------");
+
+        Iterator<Activity> activityIterator = activities.iterator();
+
+        while (activityIterator.hasNext()) {
+            Activity activity = activityIterator.next();
+            activity.print();
+        }
 
     }
 
@@ -23,7 +36,7 @@ public class Project implements Activity {
 
     }
 
-    public Project getOwner () {
+    public Project getOwner() {
         return ownerProject;
     }
 
@@ -35,7 +48,13 @@ public class Project implements Activity {
         activities.remove(activity);
     }
 
-  //public void getActivities(){ }
+    public Activity getChild(final int i) {
+        return activities.get(i);
+    }
+
+    public String getName() {
+        return name;
+    }
 
 
 }

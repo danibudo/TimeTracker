@@ -8,8 +8,7 @@ public class Interval implements PropertyChangeListener {
     private long startTime;
     private long endTime;
 
-    public Interval(final long start, final long finish, final Task task) {
-        ownerTask = task;
+    public Interval(final long start, final long finish) {
         startTime = start;
         endTime = finish;
     }
@@ -32,13 +31,11 @@ public class Interval implements PropertyChangeListener {
         //Temporary solution for testing purposes
         if (getRemainingTime() > 0 && getRemainingTime() < getDuration()) {
             System.out.println("\"" + ownerTask.getOwner().name + "\" project:");
-            System.out.println("\"" + ownerTask.name + "\" task:");
+            //System.out.println("\"" + ownerTask.name + "\" task:");
             System.out.println(getRemainingTime() / 1000 + " seconds remaining ...\n");
         }
     }
 
-    //getFinalDate() {}
-    //getBeginDate() {}
 
 
 

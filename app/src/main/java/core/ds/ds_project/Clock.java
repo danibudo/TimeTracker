@@ -21,7 +21,9 @@ public final class Clock {
 
     public static Clock getInstance() {
 
-        if (instance == null) instance = new Clock();
+        if (instance == null) {
+            instance = new Clock();
+        }
 
         return instance;
     }
