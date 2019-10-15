@@ -15,6 +15,10 @@ public interface Activity extends PropertyChangeListener {
 
     void print();
 
+    //void addInterval(Interval interval);
+
+    //void removeInterval(Interval interval);
+
     Project getOwner();
 
     @Override

@@ -1,15 +1,17 @@
 package core.ds.ds_project;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task implements Activity {
     private Project ownerProject;
-    public String name;
+    private String name;
     private List<Interval> intervals;
 
     public Task(final String taskName) {
-        name = taskName;
+        this.name = taskName;
+        this.intervals = new ArrayList<>();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class Task implements Activity {
         return name;
     }
 
-    public Project getOwner () {
+    public Project getOwner() {
         return ownerProject;
     }
 

@@ -4,7 +4,12 @@ public class MainApplication {
     public static void main(String[] args) {
 
         Activity task1 = new Task("Attending theory class");
+        //Interval interval1 = new Interval(0,60*60*2);
+        //task1.addInterval(interval1);
+
+
         Activity task2 = new Task("Study");
+        //Interval interval2 = new Interval(0,10);
         Activity proj1 = new Project("DS");
 
         Activity task3 = new Task("Implementation of composite pattern");

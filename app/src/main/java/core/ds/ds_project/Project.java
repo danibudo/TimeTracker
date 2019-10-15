@@ -36,7 +36,7 @@ public class Project implements Activity {
 
     }
 
-    public Project getOwner () {
+    public Project getOwner() {
         return ownerProject;
     }
 
