@@ -9,7 +9,8 @@ public class Task implements Activity {
     private String name;
     private List<Interval> intervals;
 
-    public Task(final String taskName) {
+    public Task(final Project ownerProject, final String taskName) {
+        this.ownerProject = ownerProject;
         this.name = taskName;
         this.intervals = new ArrayList<>();
     }
@@ -54,5 +55,13 @@ public class Task implements Activity {
         intervals.remove(interval);
     }
 
+    public void start() {
+        Interval interval = new Interval(this, 0);
+        intervals.add(interval);
+        Clock.getInstance().addPropertyChangeListener(interval);
+    }
 
+    public void stop() {
+        intervals.get(0).stop();
+    }
 }

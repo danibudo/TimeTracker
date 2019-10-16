@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Project implements Activity {
     private Project ownerProject;
-    public String name;
+    private String name;
     private List<Activity> activities;
 
-    public Project(final String projectName) {
-
+    public Project(final Project ownerProject, final String projectName) {
+        this.ownerProject = ownerProject;
         name = projectName;
         this.activities = new ArrayList<>();
     }

@@ -1,37 +1,29 @@
 package core.ds.ds_project;
 
+import android.widget.ActionMenuView;
+
+import java.util.concurrent.TimeUnit;
+
 public class MainApplication {
     public static void main(String[] args) {
 
-        Activity task1 = new Task("Attending theory class");
-        //Interval interval1 = new Interval(0,60*60*2);
-        //task1.addInterval(interval1);
+        Clock clock = Clock.getInstance();
 
+        Activity project1 = new Project(null, "P1");
+        Activity task3 = new Task((Project) project1, "T3");
+        Activity project2 = new Project( (Project) project1,"P2");
+        Activity task2 = new Task((Project) project2, "T2");
+        Activity task1 = new Task((Project) project2, "T1");
 
-        Activity task2 = new Task("Study");
-        //Interval interval2 = new Interval(0,10);
-        Activity proj1 = new Project("DS");
+        clock.run();
 
-        Activity task3 = new Task("Implementation of composite pattern");
-        Activity task4 = new Task("Clock class");
-        Activity proj2 = new Project("DS Project");
-
-        Activity task5 = new Task("Do homework");
-        Activity proj3 = new Project("DS Problems");
-
-
-        proj1.addActivity(task1);
-        proj1.addActivity(task2);
-
-        proj2.addActivity(task3);
-        proj2.addActivity(task4);
-
-        proj3.addActivity(task5);
-
-        proj1.addActivity(proj2);
-        proj1.addActivity(proj3);
-
-        proj1.print();
+        ((Task) task3).start();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((Task) task3).stop();
 
     }
 }

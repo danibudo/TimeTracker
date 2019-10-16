@@ -8,14 +8,24 @@ public class Interval implements PropertyChangeListener {
     private long startTime;
     private long endTime;
 
-    public Interval(final long start, final long finish) {
-        startTime = start;
-        endTime = finish;
+    public Interval(final Task ownerTask, final long startTime, final long finishTime) {
+        this.ownerTask = ownerTask;
+        this.startTime = startTime;
+        this.endTime = finishTime;
+    }
+
+    public Interval(final Task ownerTask, final long startTime) {
+        this.ownerTask = ownerTask;
+        this.startTime = startTime;
     }
 
     public long getDuration() {
         //Difference in milliseconds
-        return endTime - startTime;
+        return Clock.getCurrentTime() - startTime;
+    }
+
+    public void stop() {
+        endTime = Clock.getCurrentTime();
     }
 
     public long getRemainingTime() {
@@ -28,12 +38,31 @@ public class Interval implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        //Temporary solution for testing purposes
+        if (getRemainingTime() < getDuration()) {
+            System.out.print("\n" + ownerTask.getOwner().getName());
+            System.out.print("\t");
+            System.out.print(startTime);
+            System.out.print("\t");
+            System.out.print(endTime);
+            System.out.print("\t");
+            System.out.print(Time.getSeconds(getDuration()));
+
+            System.out.print("\n" + ownerTask.getName());
+            System.out.print("\t");
+            System.out.print(startTime);
+            System.out.print("\t");
+            System.out.print(endTime);
+            System.out.print("\t");
+            System.out.print(Time.getSeconds(getDuration()));
+        }
+
+
+        /*//Temporary solution for testing purposes
         if (getRemainingTime() > 0 && getRemainingTime() < getDuration()) {
             System.out.println("\"" + ownerTask.getOwner().name + "\" project:");
             //System.out.println("\"" + ownerTask.name + "\" task:");
             System.out.println(getRemainingTime() / 1000 + " seconds remaining ...\n");
-        }
+        }*/
     }
 
 
