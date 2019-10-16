@@ -19,6 +19,10 @@ public final class Clock {
         executor = Executors.newSingleThreadScheduledExecutor();
     }
 
+    /**
+     * Gets the single instance of the class <code>Clock</code>.
+     * @return the <code>Clock</code> instance
+     */
     public static Clock getInstance() {
 
         if (instance == null) {
@@ -28,23 +32,48 @@ public final class Clock {
         return instance;
     }
 
-    public static long getCurrentTime() {
+    static long getCurrentTime() {
         return currentTime.getTime();
     }
 
+    /**
+     * Adds a listener which will be notified about every
+     * time the tick method is executed.
+     * <p>
+     * In order to make a class be able to listen to the
+     * ticks, the class must implement
+     * the <code>PropertyChangeListener</code> interface.
+     * @param pcl the property change listener
+     */
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
+    /**
+     * Make a listener stop listening to the clock ticks.
+     * @param pcl the property change listener
+     */
     public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
     }
 
+    /**
+     * Updates current time and fires the property change event.
+     * <p>
+     * This method gets executed at a fixed rate after the
+     * <code>run</code> method is used.
+     */
     private void tick() {
         Date oldTime = currentTime;
         currentTime = new Date();
         support.firePropertyChange("currentTime", oldTime, currentTime);
     }
 
+    /**
+     * Starts the clock.
+     * <p>
+     * Establishes a thread in which the <code>tick</code>
+     * method will be executed at fixed rate.
+     */
     void run() {
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
