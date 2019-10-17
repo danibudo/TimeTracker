@@ -1,42 +1,70 @@
 package core.ds.ds_project;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class Time {
 
+    private static final int HOURS_IN_DAY = 24;
+    private static final int MINUTES_IN_HOUR = 60;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int MILLISECONDS_IN_SECOND = 1000;
+
     public static long getDays(final long milliseconds) {
-        return getHours(milliseconds) / 24;
+        return getHours(milliseconds) / HOURS_IN_DAY;
     }
 
     public static long getHours(final long milliseconds) {
-        return getMinutes(milliseconds) / 60;
+        return getMinutes(milliseconds) / MINUTES_IN_HOUR;
     }
 
     public static long getMinutes(final long milliseconds) {
-        return getSeconds(milliseconds) / 60;
+        return getSeconds(milliseconds) / SECONDS_IN_MINUTE;
     }
 
     public static long getSeconds(final long milliseconds) {
-        return milliseconds / 1000;
+        return milliseconds / MILLISECONDS_IN_SECOND;
     }
 
     public static long setDays(final int days) {
-        return days * 24 * 60 * 60 * 1000;
+        return days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
 
     public static long setHours(final int hours) {
-        return hours * 60 * 60 * 1000;
+        return hours * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
 
     public static long setMinutes(final int minutes) {
-        return minutes * 60 * 1000;
+        return minutes * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
 
     public static long setSeconds(final int seconds) {
-        return seconds * 1000;
+        return seconds * MILLISECONDS_IN_SECOND;
+    }
+
+    public static String getDateAndTime(final long milliseconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliseconds);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        String time = getTime(milliseconds);
+
+        return String.valueOf(day) + '-' + month + '-' + year + ' ' + time;
     }
 
     public static String getTime(final long milliseconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliseconds);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        return String.valueOf(hour) + ':' + minute + ':' + second;
+    }
+
+    public static String getRemainingTime(final long milliseconds) {
         LinkedList<String> units = new LinkedList<>();
         StringBuilder builder = new StringBuilder();
 
