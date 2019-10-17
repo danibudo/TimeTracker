@@ -65,14 +65,14 @@ public final class Clock {
     private void tick() {
         Date oldTime = currentTime;
         currentTime = new Date();
-        support.firePropertyChange("currentTime", oldTime, currentTime);
 
         if (support.hasListeners("currentTime")) {
             String tableHeader = "Nom   Temps inici\tTemps final\tDurada (hh:mm:ss)";
-            tableHeader += "-----+---------------------+---------------------+-----------------";
+            tableHeader += "\n-----+---------------------+---------------------+-----------------";
 
            System.out.println(tableHeader);
         }
+        support.firePropertyChange("currentTime", oldTime, currentTime);
     }
 
     /**
