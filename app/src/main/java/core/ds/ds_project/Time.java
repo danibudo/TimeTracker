@@ -47,7 +47,7 @@ public class Time {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliseconds);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
