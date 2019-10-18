@@ -18,15 +18,24 @@ public class MainApplication {
         project2.addActivity(task2);
         project2.addActivity(task1);
 
+        Activity task4 = new Task((Project) project1, "T4");
+        project1.addActivity(task4);
+
         clock.run();
 
         ((Task) task3).start();
+        ((Task) task4).start();
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         ((Task) task3).stop();
-
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((Task) task4).stop();
     }
 }
