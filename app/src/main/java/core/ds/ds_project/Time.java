@@ -2,6 +2,7 @@ package core.ds.ds_project;
 
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class Time {
 
@@ -48,20 +49,29 @@ public class Time {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-        String time = getTime(milliseconds);
-
-        return String.valueOf(day) + '-' + month + '-' + year + ' ' + time;
-    }
-
-    public static String getTime(final long milliseconds) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliseconds);
-
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
 
-        return String.valueOf(hour) + ':' + minute + ':' + second;
+        return String.format("%s-%s-%s %s:%s:%s",
+                String.format(Locale.ENGLISH, "%02d", day),
+                String.format(Locale.ENGLISH, "%02d", month),
+                String.format(Locale.ENGLISH, "%02d", year),
+                String.format(Locale.ENGLISH, "%02d", hour),
+                String.format(Locale.ENGLISH, "%02d", minute),
+                String.format(Locale.ENGLISH, "%02d", second));
+    }
+
+    public static String getTime(long milliseconds) {
+        int hours = (int) getHours(milliseconds);
+        milliseconds -= setHours(hours);
+        int minutes = (int) getMinutes(milliseconds);
+        milliseconds -= setMinutes(minutes);
+        int seconds = (int) getSeconds(milliseconds);
+        return String.format("%s:%s:%s",
+                String.format(Locale.ENGLISH, "%02d", hours),
+                String.format(Locale.ENGLISH, "%02d", minutes),
+                String.format(Locale.ENGLISH, "%02d", seconds));
     }
 
     public static String getRemainingTime(final long milliseconds) {
