@@ -8,6 +8,7 @@ public class Interval implements PropertyChangeListener {
     private long startTime;
     private long endTime;
     private long duration;
+    private boolean readyToStopListening = false;
 
     public Interval(final Task ownerTask, final long startTime, final long finishTime) {
         this.ownerTask = ownerTask;
@@ -49,6 +50,12 @@ public class Interval implements PropertyChangeListener {
             printData(ownerTask.getOwner());
             printData(ownerTask);
 
+        if (endTime < Clock.getCurrentTime()) {
+            if (readyToStopListening) {
+                Clock.getInstance().removePropertyChangeListener(this);
+            }
+            readyToStopListening = true;
+        }
         /*//Temporary solution for testing purposes
         if (getRemainingTime() > 0 && getRemainingTime() < getDuration()) {
             System.out.println("\"" + ownerTask.getOwner().name + "\" project:");
@@ -69,7 +76,7 @@ public class Interval implements PropertyChangeListener {
             System.out.print("\t\t\t\t\t");
         }
         System.out.print("\t");
-        System.out.print(Time.getTime(duration));
+        System.out.print(Time.getTime(activity.getDuration()));
     }
 
 

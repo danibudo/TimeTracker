@@ -32,6 +32,15 @@ public class Project implements Activity {
     }
 
     @Override
+    public long getDuration() {
+        long duration = 0;
+        for (Activity activity : activities) {
+            duration += activity.getDuration();
+        }
+        return duration;
+    }
+
+    @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
 
     }

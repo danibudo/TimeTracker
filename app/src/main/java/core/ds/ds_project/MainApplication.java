@@ -11,9 +11,12 @@ public class MainApplication {
 
         Activity project1 = new Project(null, "P1");
         Activity task3 = new Task((Project) project1, "T3");
-        Activity project2 = new Project( (Project) project1,"P2");
+        project1.addActivity(task3);
+        Activity project2 = new Project( (Project) project1, "P2");
         Activity task2 = new Task((Project) project2, "T2");
         Activity task1 = new Task((Project) project2, "T1");
+        project2.addActivity(task2);
+        project2.addActivity(task1);
 
         clock.run();
 

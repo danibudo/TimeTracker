@@ -22,6 +22,15 @@ public class Task implements Activity {
     }
 
     @Override
+    public long getDuration() {
+        long duration = 0;
+        for (Interval interval : intervals) {
+            duration += interval.getDuration();
+        }
+        return duration;
+    }
+
+    @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
 
     }

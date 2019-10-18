@@ -15,6 +15,8 @@ public interface Activity extends PropertyChangeListener {
 
     void print();
 
+    long getDuration();
+
     //void addInterval(Interval interval);
 
     //void removeInterval(Interval interval);
