@@ -7,6 +7,7 @@ public class Interval implements PropertyChangeListener {
     private Task ownerTask;
     private long startTime;
     private long endTime;
+    private long duration;
 
     public Interval(final Task ownerTask, final long startTime, final long finishTime) {
         this.ownerTask = ownerTask;
@@ -16,12 +17,16 @@ public class Interval implements PropertyChangeListener {
 
     public Interval(final Task ownerTask, final long startTime) {
         this.ownerTask = ownerTask;
-        this.startTime = startTime;
+        this.startTime = startTime + Clock.getCurrentTime();
     }
 
     public long getDuration() {
         //Difference in milliseconds
-        return Clock.getCurrentTime() - startTime;
+        if (Clock.getCurrentTime() > endTime && endTime != 0) {
+            return endTime - startTime;
+        } else {
+            return Clock.getCurrentTime() - startTime;
+        }
     }
 
     public void stop() {
@@ -38,24 +43,11 @@ public class Interval implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        if (getRemainingTime() < getDuration()) {
-            System.out.print("\n" + ownerTask.getOwner().getName());
-            System.out.print("\t");
-            System.out.print(startTime);
-            System.out.print("\t");
-            System.out.print(endTime);
-            System.out.print("\t");
-            System.out.print(Time.getSeconds(getDuration()));
-
-            System.out.print("\n" + ownerTask.getName());
-            System.out.print("\t");
-            System.out.print(startTime);
-            System.out.print("\t");
-            System.out.print(endTime);
-            System.out.print("\t");
-            System.out.print(Time.getSeconds(getDuration()));
+        if (endTime < Clock.getCurrentTime()) {
+            duration = getDuration();
         }
-
+            printData(ownerTask.getOwner());
+            printData(ownerTask);
 
         /*//Temporary solution for testing purposes
         if (getRemainingTime() > 0 && getRemainingTime() < getDuration()) {
@@ -65,7 +57,20 @@ public class Interval implements PropertyChangeListener {
         }*/
     }
 
-
+    private void printData(final Activity activity) {
+        System.out.print("\n" + activity.getName());
+        System.out.print("\t   ");
+        System.out.print(Time.getDateAndTime(startTime));
+        System.out.print("\t");
+        if (endTime != 0) {
+            System.out.print(Time.getDateAndTime(endTime));
+            System.out.print("\t");
+        } else {
+            System.out.print("\t\t\t\t\t");
+        }
+        System.out.print("\t");
+        System.out.print(Time.getTime(duration));
+    }
 
 
 }
