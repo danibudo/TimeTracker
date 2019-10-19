@@ -67,7 +67,7 @@ public final class Clock {
         currentTime = new Date();
 
         if (support.hasListeners("currentTime")) {
-            String tableHeader = "\nNom   Temps inici\t\tTemps final\t\tDurada (hh:mm:ss)";
+            String tableHeader = "\nNom   Temps inici\t\t\t Temps final\t\t\tDurada (hh:mm:ss)";
             tableHeader += "\n-----+---------------------+---------------------+-----------------";
 
            System.out.println(tableHeader);
