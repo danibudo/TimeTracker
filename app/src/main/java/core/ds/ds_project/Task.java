@@ -2,12 +2,17 @@ package core.ds.ds_project;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class Task implements Activity {
     private Project ownerProject;
     private String name;
     private List<Interval> intervals;
+    private long endTime;
+    private long startTime;
 
     public Task(final Project ownerProject, final String taskName) {
         this.ownerProject = ownerProject;
@@ -35,6 +40,19 @@ public class Task implements Activity {
 
     }
 
+    @Override
+    public long getEndTime() {
+        return endTime;
+    }
+
+    @Override
+    public long getStartTime() {
+        if (!intervals.isEmpty() && startTime == 0) {
+            startTime = Clock.getCurrentTime();
+        }
+        return startTime;
+    }
+
     public void addActivity(final Activity activity) {
         //this is leaf node so this method is not applicable
     }
@@ -57,6 +75,13 @@ public class Task implements Activity {
     }
 
     public void addInterval(final Interval interval) {
+        if (intervals.isEmpty()) {
+            startTime = interval.getStartTime();
+        }
+        if (interval.getEndTime() > endTime) {
+            endTime = interval.getEndTime();
+        }
+
         intervals.add(interval);
     }
 
@@ -67,10 +92,15 @@ public class Task implements Activity {
     public void start() {
         Interval interval = new Interval(this, 0);
         intervals.add(interval);
-        Clock.getInstance().addPropertyChangeListener(interval);
+        if (!ownerProject.isListening()) {
+            Clock.getInstance().addPropertyChangeListener(ownerProject);
+            ownerProject.setListening(true);
+        }
     }
 
     public void stop() {
         intervals.get(0).stop();
+        this.endTime = intervals.get(0).getEndTime();
+        this.ownerProject.stop();
     }
 }

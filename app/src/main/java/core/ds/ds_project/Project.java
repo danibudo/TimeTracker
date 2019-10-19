@@ -9,6 +9,9 @@ public class Project implements Activity {
     private Project ownerProject;
     private String name;
     private List<Activity> activities;
+    private long startTime;
+    private long endTime;
+    private boolean isListening;
 
     public Project(final Project ownerProject, final String projectName) {
         this.ownerProject = ownerProject;
@@ -42,7 +45,25 @@ public class Project implements Activity {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
+        printData(this);
+        for (Activity activity : activities) {
+            printData(activity);
+        }
+    }
 
+    private static void printData(final Activity activity) {
+        System.out.print("\n" + activity.getName());
+        System.out.print("\t   ");
+        System.out.print(Time.getDateAndTime(activity.getStartTime()));
+        System.out.print("\t");
+        if (activity.getEndTime() != 0) {
+            System.out.print(Time.getDateAndTime(activity.getEndTime()));
+            System.out.print("\t");
+        } else {
+            System.out.print("\t\t\t\t\t");
+        }
+        System.out.print("\t");
+        System.out.print(Time.getTime(activity.getDuration()));
     }
 
     public Project getOwner() {
@@ -50,6 +71,13 @@ public class Project implements Activity {
     }
 
     public void addActivity(final Activity activity) {
+        if (activities.isEmpty()) {
+            startTime = activity.getStartTime();
+        }
+        if (activity.getEndTime() > endTime) {
+            endTime = activity.getEndTime();
+        }
+
         activities.add(activity);
     }
 
@@ -65,5 +93,28 @@ public class Project implements Activity {
         return name;
     }
 
+    @Override
+    public long getStartTime() {
+        if (!activities.isEmpty() && startTime == 0) {
+            startTime = Clock.getCurrentTime();
+        }
+        return startTime;
+    }
 
+    @Override
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void stop() {
+        endTime = Clock.getCurrentTime();
+    }
+
+    public void setListening(final boolean listening) {
+        isListening = listening;
+    }
+
+    public boolean isListening() {
+        return isListening;
+    }
 }

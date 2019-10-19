@@ -79,5 +79,11 @@ public class Interval implements PropertyChangeListener {
         System.out.print(Time.getTime(activity.getDuration()));
     }
 
+    public long getStartTime() {
+        return startTime;
+    }
 
+    public long getEndTime() {
+        return endTime;
+    }
 }

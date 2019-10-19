@@ -25,4 +25,8 @@ public interface Activity extends PropertyChangeListener {
 
     @Override
     void propertyChange(PropertyChangeEvent propertyChangeEvent);
+
+    long getEndTime();
+
+    long getStartTime();
 }
