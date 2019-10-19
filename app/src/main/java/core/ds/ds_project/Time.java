@@ -11,38 +11,65 @@ public class Time {
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int MILLISECONDS_IN_SECOND = 1000;
 
+    /**
+     * Convert miliseconds to days
+     * @return the days
+     */
     public static long getDays(final long milliseconds) {
         return getHours(milliseconds) / HOURS_IN_DAY;
     }
 
+    /**
+     *Convert miliseconds to hours
+     * @return the hours
+     */
     public static long getHours(final long milliseconds) {
         return getMinutes(milliseconds) / MINUTES_IN_HOUR;
     }
 
+    /**
+     *Convert miliseconds to minutes
+     * @return the minutes
+     */
     public static long getMinutes(final long milliseconds) {
         return getSeconds(milliseconds) / SECONDS_IN_MINUTE;
     }
 
+    /**
+     *Convert miliseconds to seconds
+     * @return the seconds
+     */
     public static long getSeconds(final long milliseconds) {
         return milliseconds / MILLISECONDS_IN_SECOND;
     }
 
+    /*
+    Get the number of miliseconds from the number of days
+     */
     public static long setDays(final int days) {
         return days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-
+    /*
+    Get the number of miliseconds from the number of hours
+     */
     public static long setHours(final int hours) {
         return hours * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-
+    /*
+    Get the number of miliseconds from the number of minutes
+     */
     public static long setMinutes(final int minutes) {
         return minutes * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-
+    /*
+    Get the number of miliseconds from the number of seconds
+     */
     public static long setSeconds(final int seconds) {
         return seconds * MILLISECONDS_IN_SECOND;
     }
-
+    /**
+     *Return date and time in a year-month-day hh:mm:ss format
+     */
     public static String getDateAndTime(final long milliseconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliseconds);
@@ -61,7 +88,9 @@ public class Time {
                 String.format(Locale.ENGLISH, "%02d", minute),
                 String.format(Locale.ENGLISH, "%02d", second));
     }
-
+    /*
+    Return the time in hh:mm:ss format
+     */
     public static String getTime(long milliseconds) {
         int hours = (int) getHours(milliseconds);
         milliseconds -= setHours(hours);
