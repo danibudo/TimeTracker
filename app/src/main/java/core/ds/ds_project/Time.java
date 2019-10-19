@@ -11,31 +11,38 @@ public class Time {
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int MILLISECONDS_IN_SECOND = 1000;
 
-    /*
-    Convert miliseconds to days
+    /**
+     * Convert miliseconds to days
+     * @return the days
      */
     public static long getDays(final long milliseconds) {
         return getHours(milliseconds) / HOURS_IN_DAY;
     }
-    /*
-    Convert miliseconds to hours
-     */
 
+    /**
+     *Convert miliseconds to hours
+     * @return the hours
+     */
     public static long getHours(final long milliseconds) {
         return getMinutes(milliseconds) / MINUTES_IN_HOUR;
     }
-    /*
-    Convert miliseconds to minutes
+
+    /**
+     *Convert miliseconds to minutes
+     * @return the minutes
      */
     public static long getMinutes(final long milliseconds) {
         return getSeconds(milliseconds) / SECONDS_IN_MINUTE;
     }
-    /*
-    Convert miliseconds to seconds
+
+    /**
+     *Convert miliseconds to seconds
+     * @return the seconds
      */
     public static long getSeconds(final long milliseconds) {
         return milliseconds / MILLISECONDS_IN_SECOND;
     }
+
     /*
     Get the number of miliseconds from the number of days
      */
@@ -60,8 +67,8 @@ public class Time {
     public static long setSeconds(final int seconds) {
         return seconds * MILLISECONDS_IN_SECOND;
     }
-    /*
-    Return date and time in a year-month-day hh:mm:ss format
+    /**
+     *Return date and time in a year-month-day hh:mm:ss format
      */
     public static String getDateAndTime(final long milliseconds) {
         Calendar calendar = Calendar.getInstance();
