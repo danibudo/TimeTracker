@@ -1,18 +1,20 @@
 package core.ds.ds_project;
 
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.Locale;
 
-public class Time {
+public final class Time {
 
     private static final int HOURS_IN_DAY = 24;
     private static final int MINUTES_IN_HOUR = 60;
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int MILLISECONDS_IN_SECOND = 1000;
 
+    private Time() { }
+
     /**
-     * Convert miliseconds to days
+     * Converts milliseconds to days.
+     * @param milliseconds time to convert into days
      * @return the days
      */
     public static long getDays(final long milliseconds) {
@@ -20,7 +22,8 @@ public class Time {
     }
 
     /**
-     *Convert miliseconds to hours
+     *Converts milliseconds to hours.
+     * @param milliseconds time to convert into hours
      * @return the hours
      */
     public static long getHours(final long milliseconds) {
@@ -28,7 +31,8 @@ public class Time {
     }
 
     /**
-     *Convert miliseconds to minutes
+     *Converts milliseconds to minutes.
+     * @param milliseconds time to convert into minutes
      * @return the minutes
      */
     public static long getMinutes(final long milliseconds) {
@@ -36,39 +40,55 @@ public class Time {
     }
 
     /**
-     *Convert miliseconds to seconds
+     *Converts milliseconds to seconds.
+     * @param milliseconds time to convert into seconds
      * @return the seconds
      */
     public static long getSeconds(final long milliseconds) {
         return milliseconds / MILLISECONDS_IN_SECOND;
     }
 
-    /*
-    Get the number of miliseconds from the number of days
+    /**
+     * Gets the number of milliseconds from the number of days.
+     * @param days the number of days to convert into milliseconds
+     * @return the milliseconds
      */
     public static long setDays(final int days) {
         return days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-    /*
-    Get the number of miliseconds from the number of hours
+
+    /**
+     * Gets the number of milliseconds from the number of hours.
+     * @param hours the number of hours to convert into milliseconds
+     * @return the milliseconds
      */
     public static long setHours(final int hours) {
         return hours * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-    /*
-    Get the number of miliseconds from the number of minutes
+
+    /**
+     * Gets the number of milliseconds from the number of minutes.
+     * @param minutes the number of minutes to convert into milliseconds
+     * @return the milliseconds
      */
     public static long setMinutes(final int minutes) {
         return minutes * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
     }
-    /*
-    Get the number of miliseconds from the number of seconds
+
+    /**
+     * Gets the number of milliseconds from the number of seconds.
+     * @param seconds the number of seconds to convert into milliseconds
+     * @return the milliseconds
      */
     public static long setSeconds(final int seconds) {
         return seconds * MILLISECONDS_IN_SECOND;
     }
+
     /**
-     *Return date and time in a year-month-day hh:mm:ss format
+     * Turns a date written in milliseconds into a date and time representation
+     * in a dd-mm-yyyy hh:mm:ss format.
+     * @param milliseconds date and time in milliseconds
+     * @return <code>String</code> with date and time
      */
     public static String getDateAndTime(final long milliseconds) {
         Calendar calendar = Calendar.getInstance();
@@ -88,50 +108,22 @@ public class Time {
                 String.format(Locale.ENGLISH, "%02d", minute),
                 String.format(Locale.ENGLISH, "%02d", second));
     }
-    /*
-    Return the time in hh:mm:ss format
+    /**
+     * Converts milliseconds into a time representation
+     * in a hh:mm:ss format.
+     * @param milliseconds date and time in milliseconds
+     * @return <code>String</code> with date and time
      */
-    public static String getTime(long milliseconds) {
-        int hours = (int) getHours(milliseconds);
-        milliseconds -= setHours(hours);
-        int minutes = (int) getMinutes(milliseconds);
-        milliseconds -= setMinutes(minutes);
-        int seconds = (int) getSeconds(milliseconds);
+    public static String getTime(final long milliseconds) {
+        long timeInMilliseconds = milliseconds;
+        int hours = (int) getHours(timeInMilliseconds);
+        timeInMilliseconds -= setHours(hours);
+        int minutes = (int) getMinutes(timeInMilliseconds);
+        timeInMilliseconds -= setMinutes(minutes);
+        int seconds = (int) getSeconds(timeInMilliseconds);
         return String.format("%s:%s:%s",
                 String.format(Locale.ENGLISH, "%02d", hours),
                 String.format(Locale.ENGLISH, "%02d", minutes),
                 String.format(Locale.ENGLISH, "%02d", seconds));
-    }
-
-    public static String getRemainingTime(final long milliseconds) {
-        LinkedList<String> units = new LinkedList<>();
-        StringBuilder builder = new StringBuilder();
-
-        long days = getDays(milliseconds);
-        long hours = getHours(milliseconds);
-        long minutes = getMinutes(milliseconds);
-        long seconds = getSeconds(milliseconds);
-
-        if (days > 0) {
-            units.add(days + " days");
-        }
-        if (hours > 0) {
-            units.add(hours + " hours");
-        }
-        if (minutes > 0) {
-            units.add(minutes + " minutes");
-        }
-        if (seconds > 0 || units.isEmpty()) {
-            units.add(seconds + " seconds");
-        }
-
-        while (!units.isEmpty()) {
-            builder.append(units.pop());
-
-            if (units.size() > 0) {
-                builder.append(", ");
-            }
-        }
-        return builder.toString();
     }
 }
