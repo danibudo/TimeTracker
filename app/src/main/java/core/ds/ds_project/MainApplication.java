@@ -37,5 +37,14 @@ public class MainApplication {
             e.printStackTrace();
         }
         ((Task) task4).stop();
+
+        Activity project3 = new Project((Project) project1, "P3");
+        project1.addActivity(project3);
+        Activity task5 = new Task((Project) project3, "T5");
+        Activity task6 = new Task((Project) project3, "T6");
+        project3.addActivity(task5);
+        project3.addActivity(task6);
+        ((Task) task5).start();
+        ((Task) task6).start();
     }
 }

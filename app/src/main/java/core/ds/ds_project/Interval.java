@@ -8,17 +8,22 @@ public class Interval implements PropertyChangeListener {
     private long startTime;
     private long endTime;
     private long duration;
-    private boolean readyToStopListening = false;
+    private boolean isRunning;
+    private boolean readyToStopListening;
 
     public Interval(final Task ownerTask, final long startTime, final long finishTime) {
         this.ownerTask = ownerTask;
         this.startTime = startTime;
         this.endTime = finishTime;
+        this.isRunning = false;
+        this.readyToStopListening = false;
     }
 
     public Interval(final Task ownerTask, final long startTime) {
         this.ownerTask = ownerTask;
         this.startTime = startTime + Clock.getCurrentTime();
+        this.isRunning = true;
+        this.readyToStopListening = false;
     }
 
     public long getDuration() {
@@ -32,6 +37,7 @@ public class Interval implements PropertyChangeListener {
 
     public void stop() {
         endTime = Clock.getCurrentTime();
+        isRunning = false;
     }
 
     public long getRemainingTime() {

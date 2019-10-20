@@ -37,7 +37,7 @@ public class Project implements Activity {
     @Override
     public long getDuration() {
         long duration = 0;
-        for (Activity activity : activities) {
+        for (Activity activity : getActivities()) {
             duration += activity.getDuration();
         }
         return duration;
@@ -45,25 +45,32 @@ public class Project implements Activity {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        printData(this);
-        for (Activity activity : activities) {
-            printData(activity);
+        if (ownerProject == null) {
+            this.printData();
+        }
+        for (Activity activity : getActivities()) {
+            activity.printData();
         }
     }
 
-    private static void printData(final Activity activity) {
-        System.out.print("\n" + activity.getName());
+    @Override
+    public void printData() {
+        System.out.print("\n" + getName());
         System.out.print("\t   ");
-        System.out.print(Time.getDateAndTime(activity.getStartTime()));
+        if (startTime != 0) {
+            System.out.print(Time.getDateAndTime(getStartTime()));
+        } else {
+            System.out.print("\t\t\t\t\t");
+        }
         System.out.print("\t");
-        if (activity.getEndTime() != 0) {
-            System.out.print(Time.getDateAndTime(activity.getEndTime()));
+        if (!hasRunningTasks() && endTime != 0) {
+            System.out.print(Time.getDateAndTime(getEndTime()));
             System.out.print("\t");
         } else {
             System.out.print("\t\t\t\t\t");
         }
         System.out.print("\t");
-        System.out.print(Time.getTime(activity.getDuration()));
+        System.out.print(Time.getTime(getDuration()));
     }
 
     public Project getOwner() {
@@ -106,6 +113,10 @@ public class Project implements Activity {
         return endTime;
     }
 
+    public void start(final long time) {
+        startTime = time;
+    }
+
     public void stop() {
         endTime = Clock.getCurrentTime();
     }
@@ -116,5 +127,28 @@ public class Project implements Activity {
 
     public boolean isListening() {
         return isListening;
+    }
+
+    private boolean hasRunningTasks() {
+        boolean result = false;
+        for (Activity activity : getActivities()) {
+            if (activity instanceof Task) {
+                if (((Task) activity).isRunning()) {
+                   result = true;
+                }
+            } else {
+                if (((Project) activity).hasRunningTasks()) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    private ArrayList<Activity> getActivities() {
+        Object copy;
+        copy = ((ArrayList<Activity>) activities).clone();
+        //noinspection unchecked
+        return (ArrayList<Activity>) copy;
     }
 }

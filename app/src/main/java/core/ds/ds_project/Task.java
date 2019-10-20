@@ -13,11 +13,13 @@ public class Task implements Activity {
     private List<Interval> intervals;
     private long endTime;
     private long startTime;
+    private boolean isRunning;
 
     public Task(final Project ownerProject, final String taskName) {
         this.ownerProject = ownerProject;
         this.name = taskName;
         this.intervals = new ArrayList<>();
+        this.isRunning = false;
     }
 
     @Override
@@ -47,9 +49,9 @@ public class Task implements Activity {
 
     @Override
     public long getStartTime() {
-        if (!intervals.isEmpty() && startTime == 0) {
-            startTime = Clock.getCurrentTime();
-        }
+//        if (!intervals.isEmpty() && startTime == 0 && isRunning) {
+//            startTime = Clock.getCurrentTime();
+//        }
         return startTime;
     }
 
@@ -91,10 +93,14 @@ public class Task implements Activity {
 
     public void start() {
         Interval interval = new Interval(this, 0);
-        intervals.add(interval);
+        addInterval(interval);
         if (!ownerProject.isListening()) {
             Clock.getInstance().addPropertyChangeListener(ownerProject);
             ownerProject.setListening(true);
+        }
+        isRunning = true;
+        if (ownerProject.getStartTime() == 0) {
+            ownerProject.start(startTime);
         }
     }
 
@@ -102,5 +108,26 @@ public class Task implements Activity {
         intervals.get(0).stop();
         this.endTime = intervals.get(0).getEndTime();
         this.ownerProject.stop();
+        isRunning = false;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    @Override
+    public void printData() {
+        System.out.print("\n" + getName());
+        System.out.print("\t   ");
+        System.out.print(Time.getDateAndTime(getStartTime()));
+        System.out.print("\t");
+        if (getEndTime() != 0) {
+            System.out.print(Time.getDateAndTime(getEndTime()));
+            System.out.print("\t");
+        } else {
+            System.out.print("\t\t\t\t\t");
+        }
+        System.out.print("\t");
+        System.out.print(Time.getTime(getDuration()));
     }
 }
