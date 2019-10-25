@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class Clock {
-    private static Date currentTime;
+    private Date currentTime;
     private PropertyChangeSupport support;
     private ScheduledExecutorService executor;
     private static Clock instance;
@@ -32,7 +32,7 @@ public final class Clock {
         return instance;
     }
 
-    static long getCurrentTime() {
+    long getCurrentTime() {
         return currentTime.getTime();
     }
 

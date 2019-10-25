@@ -103,7 +103,7 @@ public class Project implements Activity {
     @Override
     public long getStartTime() {
         if (!activities.isEmpty() && startTime == 0) {
-            startTime = Clock.getCurrentTime();
+            startTime = Clock.getInstance().getCurrentTime();
         }
         return startTime;
     }
@@ -118,7 +118,7 @@ public class Project implements Activity {
     }
 
     public void stop() {
-        endTime = Clock.getCurrentTime();
+        endTime = Clock.getInstance().getCurrentTime();
     }
 
     public void setListening(final boolean listening) {

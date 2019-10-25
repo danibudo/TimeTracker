@@ -50,7 +50,7 @@ public class Task implements Activity {
     @Override
     public long getStartTime() {
 //        if (!intervals.isEmpty() && startTime == 0 && isRunning) {
-//            startTime = Clock.getCurrentTime();
+//            startTime = Clock.getInstance().getCurrentTime();
 //        }
         return startTime;
     }

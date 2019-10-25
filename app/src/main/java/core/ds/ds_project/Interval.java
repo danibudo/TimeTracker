@@ -21,27 +21,27 @@ public class Interval implements PropertyChangeListener {
 
     public Interval(final Task ownerTask, final long startTime) {
         this.ownerTask = ownerTask;
-        this.startTime = startTime + Clock.getCurrentTime();
+        this.startTime = startTime + Clock.getInstance().getCurrentTime();
         this.isRunning = true;
         this.readyToStopListening = false;
     }
 
     public long getDuration() {
         //Difference in milliseconds
-        if (Clock.getCurrentTime() > endTime && endTime != 0) {
+        if (Clock.getInstance().getCurrentTime() > endTime && endTime != 0) {
             return endTime - startTime;
         } else {
-            return Clock.getCurrentTime() - startTime;
+            return Clock.getInstance().getCurrentTime() - startTime;
         }
     }
 
     public void stop() {
-        endTime = Clock.getCurrentTime();
+        endTime = Clock.getInstance().getCurrentTime();
         isRunning = false;
     }
 
     public long getRemainingTime() {
-        long currentTime = Clock.getCurrentTime();
+        long currentTime = Clock.getInstance().getCurrentTime();
 
         if (currentTime < startTime) return getDuration();
         else if (currentTime > endTime) return 0;
@@ -50,13 +50,13 @@ public class Interval implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        if (endTime < Clock.getCurrentTime()) {
+        if (endTime < Clock.getInstance().getCurrentTime()) {
             duration = getDuration();
         }
             printData(ownerTask.getOwner());
             printData(ownerTask);
 
-        if (endTime < Clock.getCurrentTime()) {
+        if (endTime < Clock.getInstance().getCurrentTime()) {
             if (readyToStopListening) {
                 Clock.getInstance().removePropertyChangeListener(this);
             }
