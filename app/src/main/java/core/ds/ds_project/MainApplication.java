@@ -10,16 +10,20 @@ public class MainApplication {
         Clock clock = Clock.getInstance();
 
         Activity project1 = new Project(null, "P1");
+        Printer printer = new Printer((Project) project1);
+        clock.addPropertyChangeListener(printer);
+
+
         Activity task3 = new Task((Project) project1, "T3");
-        project1.addActivity(task3);
+        ((Project) project1).addActivity(task3);
         Activity project2 = new Project( (Project) project1, "P2");
         Activity task2 = new Task((Project) project2, "T2");
         Activity task1 = new Task((Project) project2, "T1");
-        project2.addActivity(task2);
-        project2.addActivity(task1);
+        ((Project) project2).addActivity(task2);
+        ((Project) project2).addActivity(task1);
 
         Activity task4 = new Task((Project) project1, "T4");
-        project1.addActivity(task4);
+        ((Project) project1).addActivity(task4);
 
         clock.run();
 
@@ -39,11 +43,11 @@ public class MainApplication {
         ((Task) task4).stop();
 
         Activity project3 = new Project((Project) project1, "P3");
-        project1.addActivity(project3);
+        ((Project) project1).addActivity(project3);
         Activity task5 = new Task((Project) project3, "T5");
         Activity task6 = new Task((Project) project3, "T6");
-        project3.addActivity(task5);
-        project3.addActivity(task6);
+        ((Project) project3).addActivity(task5);
+        ((Project) project3).addActivity(task6);
         ((Task) task5).start();
         ((Task) task6).start();
     }

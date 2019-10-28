@@ -42,7 +42,7 @@ public class Task implements Activity {
 
     @Override
     public void acceptVisitor(Visitor visitor) {
-        this.acceptVisitor(visitor);
+        visitor.visitTask(this);
     }
 
     public String getName() {
@@ -71,7 +71,6 @@ public class Task implements Activity {
     public void start() {
         Interval interval = new Interval(this, 0);
         addInterval(interval);
-        Clock.getInstance().addPropertyChangeListener(interval);
         isRunning = true;
         if (ownerProject.getStartTime() == 0) {
             ownerProject.start(startTime);

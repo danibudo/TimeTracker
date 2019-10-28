@@ -56,7 +56,7 @@ public class Project implements Activity {
 
     @Override
     public void acceptVisitor(Visitor visitor) {
-        this.acceptVisitor(visitor);
+        visitor.visitProject(this);
         for (Activity activity : getActivities()) {
             activity.acceptVisitor(visitor);
         }
