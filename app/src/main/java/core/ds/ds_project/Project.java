@@ -1,8 +1,6 @@
 package core.ds.ds_project;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Project implements Activity {
@@ -20,37 +18,12 @@ public class Project implements Activity {
     }
 
     @Override
-    public void print() {
-        System.out.println("-----------------------");
-        System.out.println("Project = " + getName());
-        System.out.println("-----------------------");
-
-        Iterator<Activity> activityIterator = activities.iterator();
-
-        while (activityIterator.hasNext()) {
-            Activity activity = activityIterator.next();
-            activity.print();
-        }
-
-    }
-
-    @Override
     public long getDuration() {
         long duration = 0;
         for (Activity activity : getActivities()) {
             duration += activity.getDuration();
         }
         return duration;
-    }
-
-    @Override
-    public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        if (ownerProject == null) {
-            this.printData();
-        }
-        for (Activity activity : getActivities()) {
-            activity.printData();
-        }
     }
 
     @Override
@@ -71,10 +44,22 @@ public class Project implements Activity {
         }
         System.out.print("\t");
         System.out.print(Time.getTime(getDuration()));
+
+        for (Activity activity : getActivities()) {
+            activity.printData();
+        }
     }
 
     public Project getOwner() {
         return ownerProject;
+    }
+
+    @Override
+    public void acceptVisitor(Visitor visitor) {
+        this.acceptVisitor(visitor);
+        for (Activity activity : getActivities()) {
+            activity.acceptVisitor(visitor);
+        }
     }
 
     public void addActivity(final Activity activity) {
@@ -90,10 +75,6 @@ public class Project implements Activity {
 
     public void removeActivity(final Activity activity) {
         activities.remove(activity);
-    }
-
-    public Activity getChild(final int i) {
-        return activities.get(i);
     }
 
     public String getName() {
@@ -129,7 +110,7 @@ public class Project implements Activity {
         return isListening;
     }
 
-    private boolean hasRunningTasks() {
+    public boolean hasRunningTasks() {
         boolean result = false;
         for (Activity activity : getActivities()) {
             if (activity instanceof Task) {
@@ -145,7 +126,7 @@ public class Project implements Activity {
         return result;
     }
 
-    private ArrayList<Activity> getActivities() {
+    public ArrayList<Activity> getActivities() {
         Object copy;
         copy = ((ArrayList<Activity>) activities).clone();
         //noinspection unchecked

@@ -1,11 +1,7 @@
 package core.ds.ds_project;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 public class Task implements Activity {
     private Project ownerProject;
@@ -23,23 +19,12 @@ public class Task implements Activity {
     }
 
     @Override
-    public void print() {
-        System.out.println("Task = " + getName());
-
-    }
-
-    @Override
     public long getDuration() {
         long duration = 0;
         for (Interval interval : intervals) {
             duration += interval.getDuration();
         }
         return duration;
-    }
-
-    @Override
-    public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-
     }
 
     @Override
@@ -55,17 +40,9 @@ public class Task implements Activity {
         return startTime;
     }
 
-    public void addActivity(final Activity activity) {
-        //this is leaf node so this method is not applicable
-    }
-
-    public void removeActivity(final Activity activity) {
-        //this is leaf node so this method is not applicable
-    }
-
-    public Activity getChild(final int i) {
-        //this is leaf node so this method is not applicable
-        return null;
+    @Override
+    public void acceptVisitor(Visitor visitor) {
+        this.acceptVisitor(visitor);
     }
 
     public String getName() {
@@ -94,10 +71,7 @@ public class Task implements Activity {
     public void start() {
         Interval interval = new Interval(this, 0);
         addInterval(interval);
-        if (!ownerProject.isListening()) {
-            Clock.getInstance().addPropertyChangeListener(ownerProject);
-            ownerProject.setListening(true);
-        }
+        Clock.getInstance().addPropertyChangeListener(interval);
         isRunning = true;
         if (ownerProject.getStartTime() == 0) {
             ownerProject.start(startTime);
