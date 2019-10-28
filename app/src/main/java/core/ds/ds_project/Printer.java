@@ -6,9 +6,12 @@ public class Printer implements Visitor {
 
     private Project rootProject;
 
+    Printer(final Project project) {
+        rootProject = project;
+    }
 
     @Override
-    public void visitProject(Project project) {
+    public void visitProject(final Project project) {
 
         System.out.print("\n" + project.getName());
         System.out.print("\t   ");
@@ -30,7 +33,7 @@ public class Printer implements Visitor {
     }
 
     @Override
-    public void visitTask(Task task) {
+    public void visitTask(final Task task) {
 
         System.out.print("\n" + task.getName());
         System.out.print("\t   ");
@@ -47,17 +50,12 @@ public class Printer implements Visitor {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-
+    public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
         printHeader();
-
         rootProject.acceptVisitor(this);
-
-
-
     }
 
-    public void printHeader() {
+    private void printHeader() {
         String tableHeader = "\nNom   Temps inici\t\t\t Temps final\t\t\tDurada (hh:mm:ss)";
         tableHeader += "\n-----+---------------------+---------------------+-----------------";
 
