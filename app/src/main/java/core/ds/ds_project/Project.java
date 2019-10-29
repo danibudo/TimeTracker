@@ -26,30 +26,6 @@ public class Project implements Activity {
         return duration;
     }
 
-    @Override
-    public void printData() {
-        System.out.print("\n" + getName());
-        System.out.print("\t   ");
-        if (startTime != 0) {
-            System.out.print(Time.getDateAndTime(getStartTime()));
-        } else {
-            System.out.print("\t\t\t\t\t");
-        }
-        System.out.print("\t");
-        if (!hasRunningTasks() && endTime != 0) {
-            System.out.print(Time.getDateAndTime(getEndTime()));
-            System.out.print("\t");
-        } else {
-            System.out.print("\t\t\t\t\t");
-        }
-        System.out.print("\t");
-        System.out.print(Time.getTime(getDuration()));
-
-        for (Activity activity : getActivities()) {
-            activity.printData();
-        }
-    }
-
     public Project getOwner() {
         return ownerProject;
     }
@@ -63,13 +39,6 @@ public class Project implements Activity {
     }
 
     public void addActivity(final Activity activity) {
-        if (activities.isEmpty()) {
-            startTime = activity.getStartTime();
-        }
-        if (activity.getEndTime() > endTime) {
-            endTime = activity.getEndTime();
-        }
-
         activities.add(activity);
     }
 
@@ -83,9 +52,6 @@ public class Project implements Activity {
 
     @Override
     public long getStartTime() {
-        if (!activities.isEmpty() && startTime == 0) {
-            startTime = Clock.getInstance().getCurrentTime();
-        }
         return startTime;
     }
 

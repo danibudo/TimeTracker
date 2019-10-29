@@ -6,8 +6,6 @@ public interface Activity {
 
     String getName();
 
-    void printData();
-
     long getDuration();
 
     long getEndTime();

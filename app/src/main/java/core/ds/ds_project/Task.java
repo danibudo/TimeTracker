@@ -34,9 +34,6 @@ public class Task implements Activity {
 
     @Override
     public long getStartTime() {
-//        if (!intervals.isEmpty() && startTime == 0 && isRunning) {
-//            startTime = Clock.getInstance().getCurrentTime();
-//        }
         return startTime;
     }
 
@@ -87,21 +84,5 @@ public class Task implements Activity {
 
     public boolean isRunning() {
         return isRunning;
-    }
-
-    @Override
-    public void printData() {
-        System.out.print("\n" + getName());
-        System.out.print("\t   ");
-        System.out.print(Time.getDateAndTime(getStartTime()));
-        System.out.print("\t");
-        if (getEndTime() != 0) {
-            System.out.print(Time.getDateAndTime(getEndTime()));
-            System.out.print("\t");
-        } else {
-            System.out.print("\t\t\t\t\t");
-        }
-        System.out.print("\t");
-        System.out.print(Time.getTime(getDuration()));
     }
 }
