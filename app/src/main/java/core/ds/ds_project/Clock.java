@@ -65,7 +65,7 @@ public final class Clock {
     private void tick() {
         Date oldTime = currentTime;
         currentTime = new Date();
-        support.firePropertyChange("currentTime", oldTime, currentTime);
+        support.firePropertyChange("currentTime", oldTime.getTime(), currentTime.getTime());
     }
 
     /**
