@@ -6,10 +6,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
-public class Interval implements Serializable {
+public class Interval implements PropertyChangeListener, Serializable {
     private Task ownerTask;
     private long startTime;
     private long endTime;
+    private long duration;
     private boolean isRunning;
     private boolean readyToStopListening;
 
@@ -19,6 +20,7 @@ public class Interval implements Serializable {
         this.endTime = finishTime;
         this.isRunning = false;
         this.readyToStopListening = false;
+        this.duration = 0;
     }
 
     public Interval(final Task ownerTask, final long startTime) {
@@ -26,15 +28,17 @@ public class Interval implements Serializable {
         this.startTime = startTime + Clock.getInstance().getCurrentTime();
         this.isRunning = true;
         this.readyToStopListening = false;
+        this.duration = 0;
     }
 
     public long getDuration() {
         //Difference in milliseconds
-        if (Clock.getInstance().getCurrentTime() > endTime && endTime != 0) {
-            return endTime - startTime;
-        } else {
-            return Clock.getInstance().getCurrentTime() - startTime;
-        }
+//        if (Clock.getInstance().getCurrentTime() > endTime && endTime != 0) {
+//            return endTime - startTime;
+//        } else {
+//            return Clock.getInstance().getCurrentTime() - startTime;
+//        }
+        return duration;
     }
 
     public void stop() {
@@ -60,5 +64,14 @@ public class Interval implements Serializable {
 
     public long getEndTime() {
         return endTime;
+    }
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
+        if (endTime == 0) {
+            long oldValue = (long) propertyChangeEvent.getOldValue();
+            long newValue = (long) propertyChangeEvent.getNewValue();
+            duration += newValue - oldValue;
+        }
     }
 }

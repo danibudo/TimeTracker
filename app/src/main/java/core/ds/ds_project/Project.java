@@ -1,5 +1,6 @@
 package core.ds.ds_project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +10,23 @@ public class Project implements Activity {
     private List<Activity> activities;
     private long startTime;
     private long endTime;
+    private long duration;
     private boolean isListening;
 
     public Project(final Project ownerProject, final String projectName) {
         this.ownerProject = ownerProject;
-        name = projectName;
+        this.name = projectName;
         this.activities = new ArrayList<>();
+        this.duration = 0;
     }
 
     @Override
     public long getDuration() {
-        long duration = 0;
+        long taskDurations = 0;
         for (Activity activity : getActivities()) {
-            duration += activity.getDuration();
+            taskDurations += activity.getDuration();
         }
+        duration = taskDurations;
         return duration;
     }
 

@@ -9,6 +9,7 @@ public class Task implements Activity {
     private List<Interval> intervals;
     private long endTime;
     private long startTime;
+    private long duration;
     private boolean isRunning;
 
     public Task(final Project ownerProject, final String taskName) {
@@ -16,14 +17,16 @@ public class Task implements Activity {
         this.name = taskName;
         this.intervals = new ArrayList<>();
         this.isRunning = false;
+        this.duration = 0;
     }
 
     @Override
     public long getDuration() {
-        long duration = 0;
+        long intervalDurations = 0;
         for (Interval interval : intervals) {
-            duration += interval.getDuration();
+            intervalDurations += interval.getDuration();
         }
+        duration = intervalDurations;
         return duration;
     }
 
@@ -67,6 +70,7 @@ public class Task implements Activity {
 
     public void start() {
         Interval interval = new Interval(this, 0);
+        Clock.getInstance().addPropertyChangeListener(interval);
         addInterval(interval);
         isRunning = true;
         if (ownerProject.getStartTime() == 0) {
