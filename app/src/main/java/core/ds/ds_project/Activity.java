@@ -1,6 +1,8 @@
 package core.ds.ds_project;
 
-public interface Activity {
+import java.io.Serializable;
+
+public interface Activity extends Serializable {
 
     void acceptVisitor(Visitor visitor);
 

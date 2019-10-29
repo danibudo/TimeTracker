@@ -4,8 +4,9 @@ import android.util.Printer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 
-public class Interval {
+public class Interval implements Serializable {
     private Task ownerTask;
     private long startTime;
     private long endTime;
@@ -52,26 +53,6 @@ public class Interval {
             return endTime - currentTime;
         }
     }
-
-//    @Override
-//    public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-//        ownerTask.acceptVisitor(new Printer());
-//    }
-
-//    private void printData(final Activity activity) {
-//        System.out.print("\n" + activity.getName());
-//        System.out.print("\t   ");
-//        System.out.print(Time.getDateAndTime(startTime));
-//        System.out.print("\t");
-//        if (endTime != 0) {
-//            System.out.print(Time.getDateAndTime(endTime));
-//            System.out.print("\t");
-//        } else {
-//            System.out.print("\t\t\t\t\t");
-//        }
-//        System.out.print("\t");
-//        System.out.print(Time.getTime(activity.getDuration()));
-//    }
 
     public long getStartTime() {
         return startTime;
