@@ -37,8 +37,12 @@ public class Printer implements Visitor {
 
         System.out.print("\n" + task.getName());
         System.out.print("\t   ");
-        System.out.print(Time.getDateAndTime(task.getStartTime()));
-        System.out.print("\t");
+        if (task.getStartTime() != 0) {
+            System.out.print(Time.getDateAndTime(task.getStartTime()));
+        } else {
+            System.out.print("\t\t\t\t\t");
+        }
+            System.out.print("\t");
         if (task.getEndTime() != 0) {
             System.out.print(Time.getDateAndTime(task.getEndTime()));
             System.out.print("\t");
