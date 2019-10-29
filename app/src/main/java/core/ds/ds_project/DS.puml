@@ -1,0 +1,112 @@
+@startuml
+
+interface Activity extends Serializable {
+
+void acceptVisitor( Visitor visitor)
+String getName()
+long getDuration()
+long getEndTime()
+long getStartTime()
+}
+
+class Project implements Activity {
+Project ownerProject
+String getName
+List<Activity> activities
+long startTime
+long endTime
+boolean isListening
+
+Project(final Project ownerProject, final String projectName)
+void acceptVisitor( Visitor visitor);
+String getName()
+long getDuration()
+long getEndTime()
+long getStartTime()
+
+ArrayList<Activity> getActivities()
+void addActivity(final Activity activity)
+boolean hasRunningTasks()
+
+}
+
+Project o-- Activity
+
+class Task implements Activity {
+
+Project ownerProject
+String name
+private List<Interval> intervals;
+long endTime;
+long startTime;
+boolean isRunning;
+
+Task(final Project ownerProject, final String taskName)
+long getDuration()
+long getEndTime()
+long getStartTime()
+void acceptVisitor(Visitor visitor)
+String getName()
+void addInterval(final Interval interval)
+void start()
+void stop()
+boolean isRunning()
+
+}
+
+interface Visitor extends PropertyChangeListener {
+
+void visitProject(Project project);
+void visitTask(Task task);
+void propertyChange(final PropertyChangeEvent propertyChangeEvent);
+
+}
+
+class Printer implements Visitor {
+Project rootProject
+
+Printer(final Project project)
+void visitProject(final Project project)
+void visitTask(final Task task)
+void propertyChange(final PropertyChangeEvent propertyChangeEvent)
+void printHeader()
+}
+
+class Interval implements Serializable {
+private Task ownerTask
+private long startTime
+private long endTime
+private boolean isRunning
+private boolean readyToStopListening
+
+
+Interval(final Task ownerTask, final long startTime, final long finishTime)
+Interval(final Task ownerTask, final long startTime)
+long getDuration()
+void stop()
+long getRemainingTime()
+long getStartTime()
+long getEndTime()
+
+}
+
+Interval o-- Task
+
+
+class Clock {
+Date currentTime;
+PropertyChangeSupport support;
+ScheduledExecutorService executor;
+static Clock instance;
+
+Clock()
+static Clock getInstance()
+getCurrentTime()
+void addPropertyChangeListener(final PropertyChangeListener pcl)
+void removePropertyChangeListener(final PropertyChangeListener pcl)
+void tick()
+run()
+
+}
+
+@enduml
