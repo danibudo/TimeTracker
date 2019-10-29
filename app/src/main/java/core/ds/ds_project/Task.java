@@ -78,8 +78,9 @@ public class Task implements Activity {
     }
 
     public void stop() {
-        intervals.get(0).stop();
-        this.endTime = intervals.get(0).getEndTime();
+        int lastIndex = intervals.size() - 1;
+        intervals.get(lastIndex).stop();
+        this.endTime = intervals.get(lastIndex).getEndTime();
         this.ownerProject.stop();
         isRunning = false;
     }
