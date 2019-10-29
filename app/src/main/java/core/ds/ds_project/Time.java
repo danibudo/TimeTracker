@@ -18,7 +18,7 @@ public final class Time {
      * @return the days
      */
     public static long getDays(final long milliseconds) {
-        return getHours(milliseconds) / HOURS_IN_DAY;
+        return (int) Math.round((double) getHours(milliseconds) / HOURS_IN_DAY);
     }
 
     /**
@@ -27,7 +27,7 @@ public final class Time {
      * @return the hours
      */
     public static long getHours(final long milliseconds) {
-        return getMinutes(milliseconds) / MINUTES_IN_HOUR;
+        return (int) Math.round((double) getMinutes(milliseconds) / MINUTES_IN_HOUR);
     }
 
     /**
@@ -36,7 +36,7 @@ public final class Time {
      * @return the minutes
      */
     public static long getMinutes(final long milliseconds) {
-        return getSeconds(milliseconds) / SECONDS_IN_MINUTE;
+        return (int) Math.round((double) getSeconds(milliseconds) / SECONDS_IN_MINUTE);
     }
 
     /**
@@ -45,7 +45,7 @@ public final class Time {
      * @return the seconds
      */
     public static long getSeconds(final long milliseconds) {
-        return milliseconds / MILLISECONDS_IN_SECOND;
+        return (int) Math.round((double) milliseconds / MILLISECONDS_IN_SECOND);
     }
 
     /**
