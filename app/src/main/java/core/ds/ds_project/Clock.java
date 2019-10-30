@@ -45,14 +45,14 @@ public final class Clock {
      * the <code>PropertyChangeListener</code> interface.
      * @param pcl the property change listener
      */
-    public void addPropertyChangeListener(final PropertyChangeListener pcl) {
+    void addPropertyChangeListener(final PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
     /**
      * Make a listener stop listening to the clock ticks.
      * @param pcl the property change listener
      */
-    public void removePropertyChangeListener(final PropertyChangeListener pcl) {
+    void removePropertyChangeListener(final PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
     }
 
@@ -65,7 +65,9 @@ public final class Clock {
     private void tick() {
         Date oldTime = currentTime;
         currentTime = new Date();
-        support.firePropertyChange("currentTime", oldTime.getTime(), currentTime.getTime());
+        support.firePropertyChange("currentTime",
+                oldTime.getTime(),
+                currentTime.getTime());
     }
 
     /**

@@ -5,73 +5,59 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
 public class Interval implements PropertyChangeListener, Serializable {
-    private Task ownerTask;
     private long startTime;
     private long endTime;
     private long duration;
-    private boolean isRunning;
-    private boolean readyToStopListening;
 
-    public Interval(final Task ownerTask, final long startTime, final long finishTime) {
-        this.ownerTask = ownerTask;
-        this.startTime = startTime + Clock.getInstance().getCurrentTime();
-        this.endTime = finishTime;
-        this.isRunning = true;
-        this.readyToStopListening = false;
+    /**
+     * Creates an <code>Interval</code> instance.
+     * @param startingTime The time when the interval should start.
+     * @param endingTime The time when the interval should end.
+     */
+    public Interval(final long startingTime, final long endingTime) {
+        this.startTime = startingTime + Clock.getInstance().getCurrentTime();
+        this.endTime = endingTime;
         this.duration = 0;
     }
 
-    public Interval(final Task ownerTask, final long startTime) {
-        this.ownerTask = ownerTask;
-        this.startTime = startTime + Clock.getInstance().getCurrentTime();
-        this.isRunning = true;
-        this.readyToStopListening = false;
+    /**
+     * Creates an <code>Interval</code> instance.
+     * @param startingTime The time when the interval should start.
+     */
+    public Interval(final long startingTime) {
+        this.startTime = startingTime + Clock.getInstance().getCurrentTime();
         this.duration = 0;
     }
 
-    public long getDuration() {
-        //Difference in milliseconds
-//        if (Clock.getInstance().getCurrentTime() > endTime && endTime != 0) {
-//            return endTime - startTime;
-//        } else {
-//            return Clock.getInstance().getCurrentTime() - startTime;
-//        }
+    final long getDuration() {
         return duration;
     }
 
-    public void stop() {
+    final void stop() {
         endTime = Clock.getInstance().getCurrentTime();
-        isRunning = false;
     }
 
-    public long getRemainingTime() {
-        long currentTime = Clock.getInstance().getCurrentTime();
-
-        if (currentTime < startTime) {
-            return getDuration();
-        } else if (currentTime > endTime) {
-            return 0;
-        } else {
-            return endTime - currentTime;
-        }
-    }
-
-    public void setStartTime(final long milliseconds) {
+    final void setStartTime(final long milliseconds) {
         startTime = milliseconds;
     }
 
-    public void setEndTime(final long milliseconds) {
+    final void setEndTime(final long milliseconds) {
         endTime = milliseconds;
     }
 
-    public long getStartTime() {
+    final long getStartTime() {
         return startTime;
     }
 
-    public long getEndTime() {
+    final long getEndTime() {
         return endTime;
     }
 
+    /**
+     * Updates the interval's duration with each tick of the <code>Clock</code>.
+     * @param propertyChangeEvent The event used to calculate the amount
+     *                            of time between ticks.
+     */
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
         if (endTime > Clock.getInstance().getCurrentTime() || endTime == 0) {

@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Task extends Activity {
+    /**
+     * The <code>List</code> of children intervals which
+     * belong to this <code>Task</code>.
+     */
     private List<Interval> intervals = new ArrayList<>();
-    void addInterval(final Interval interval) {
+
+    /**
+     * Adds an interval to the interval <code>List</code>.
+     * @param interval The <code>Interval</code> to be added.
+     */
+    final void addInterval(final Interval interval) {
         if (intervals.isEmpty()) {
             setStartTime(interval.getStartTime());
         }
@@ -15,16 +24,25 @@ public abstract class Task extends Activity {
 
         intervals.add(interval);
     }
-    public void removeInterval(final Interval interval) {
+
+    /**
+     * Removes an interval from the interval <code>List</code>.
+     * @param interval The <code>Interval</code> to be removed.
+     */
+    public final void removeInterval(final Interval interval) {
         intervals.remove(interval);
     }
-    public List<Interval> getIntervals() {
+    final List<Interval> getIntervals() {
         return intervals;
     }
-    public void setIntervals(final List<Interval> intervalList) {
+    final void setIntervals(final List<Interval> intervalList) {
         intervals = intervalList;
     }
 
+    /**
+     * Gets the <code>Task</code> instance.
+     * @return The <code>Task</code> instance.
+     */
     public Task getTask() {
         return this;
     }

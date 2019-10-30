@@ -4,9 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends Activity {
+    /**
+     * The <code>List</code> of children activities which
+     * belong to this <code>Project</code>.
+     */
     private List<Activity> activities;
-    private boolean isListening;
 
+    /**
+     * Creates a new instance of class <code>Project</code>.
+     * @param ownerProject The <code>Project</code>
+     *                     which should own this project.
+     * @param projectName The name which this project should have.
+     */
     public Project(final Project ownerProject, final String projectName) {
         setOwnerProject(ownerProject);
         setName(projectName);
@@ -15,7 +24,7 @@ public class Project extends Activity {
     }
 
     @Override
-    public long getDuration() {
+    public final long getDuration() {
         long taskDurations = 0;
         for (Activity activity : getActivities()) {
             taskDurations += activity.getDuration();
@@ -24,39 +33,37 @@ public class Project extends Activity {
         return super.getDuration();
     }
 
+    /**
+     * When a <code>Visitor</code> tries to access the object,
+     * this method accepts the visitor and helps it access
+     * the object's child activities.
+     * @param visitor The visitor that accesses the object.
+     */
     @Override
-    public void acceptVisitor(final Visitor visitor) {
+    public final void acceptVisitor(final Visitor visitor) {
         visitor.visitProject(this);
         for (Activity activity : getActivities()) {
             activity.acceptVisitor(visitor);
         }
     }
 
-    public void addActivity(final Activity activity) {
+    final void addActivity(final Activity activity) {
         activities.add(activity);
     }
 
-    public void removeActivity(final Activity activity) {
+    final void removeActivity(final Activity activity) {
         activities.remove(activity);
     }
 
-    public void start(final long time) {
+    final void start(final long time) {
         setStartTime(time);
     }
 
-    public void stop() {
+    final void stop() {
         setEndTime(Clock.getInstance().getCurrentTime());
     }
 
-    public void setListening(final boolean listening) {
-        isListening = listening;
-    }
-
-    public boolean isListening() {
-        return isListening;
-    }
-
-    public boolean hasRunningTasks() {
+    final boolean hasRunningTasks() {
         boolean result = false;
         for (Activity activity : getActivities()) {
             if (activity instanceof Task) {
@@ -72,7 +79,11 @@ public class Project extends Activity {
         return result;
     }
 
-    public ArrayList<Activity> getActivities() {
+    /**
+     * Clones the <code>List</code> of activities and returns it.
+     * @return The copy of the activity list.
+     */
+    private List<Activity> getActivities() {
         Object copy;
         copy = ((ArrayList<Activity>) activities).clone();
         //noinspection unchecked

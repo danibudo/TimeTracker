@@ -54,7 +54,10 @@ public final class Time {
      * @return the milliseconds
      */
     public static long setDays(final int days) {
-        return days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
+        return days * HOURS_IN_DAY
+                    * MINUTES_IN_HOUR
+                    * SECONDS_IN_MINUTE
+                    * MILLISECONDS_IN_SECOND;
     }
 
     /**
@@ -63,7 +66,9 @@ public final class Time {
      * @return the milliseconds
      */
     public static long setHours(final int hours) {
-        return hours * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
+        return hours * MINUTES_IN_HOUR
+                     * SECONDS_IN_MINUTE
+                     * MILLISECONDS_IN_SECOND;
     }
 
     /**
@@ -72,7 +77,8 @@ public final class Time {
      * @return the milliseconds
      */
     public static long setMinutes(final int minutes) {
-        return minutes * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
+        return minutes * SECONDS_IN_MINUTE
+                       * MILLISECONDS_IN_SECOND;
     }
 
     /**
@@ -90,7 +96,7 @@ public final class Time {
      * @param milliseconds date and time in milliseconds
      * @return <code>String</code> with date and time
      */
-    public static String getDateAndTime(final long milliseconds) {
+    static String getDateAndTime(final long milliseconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliseconds);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -114,7 +120,7 @@ public final class Time {
      * @param milliseconds date and time in milliseconds
      * @return <code>String</code> with date and time
      */
-    public static String getTime(final long milliseconds) {
+    static String getTime(final long milliseconds) {
         long timeInMilliseconds = milliseconds;
         int hours = (int) getHours(timeInMilliseconds);
         timeInMilliseconds -= setHours(hours);

@@ -1,20 +1,14 @@
 package core.ds.ds_project;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TaskImpl extends Task {
-    private boolean isRunning;
-
-    public TaskImpl(final Project ownerProject, final String taskName) {
+    TaskImpl(final Project ownerProject, final String taskName) {
         setOwnerProject(ownerProject);
         setName(taskName);
-        this.isRunning = false;
         setDuration(0);
     }
 
     @Override
-    public long getDuration() {
+    public final long getDuration() {
         long intervalDurations = 0;
         for (Interval interval : getIntervals()) {
             intervalDurations += interval.getDuration();
@@ -23,41 +17,47 @@ public class TaskImpl extends Task {
         return super.getDuration();
     }
 
+    /**
+     * When a <code>Visitor</code> tries to access the object,
+     * this method accepts the visitor and lets it use or modify
+     * the <code>TaskImpl</code> object.
+     * @param visitor The visitor that accesses the object.
+     */
     @Override
     public void acceptVisitor(final Visitor visitor) {
         visitor.visitTask(this);
     }
 
-//    public void addInterval(final Interval interval) {
-//        if (intervals.isEmpty()) {
-//            setStartTime(interval.getStartTime());
-//        }
-//        if (interval.getEndTime() > getEndTime()) {
-//            setEndTime(interval.getEndTime());
-//        }
-//
-//        intervals.add(interval);
-//    }
-
+    /**
+     * Starts the task by creating a new interval that starts immediately.
+     */
     @Override
     public void start() {
-        Interval interval = new Interval(this, 0);
+        Interval interval = new Interval(0);
         Clock.getInstance().addPropertyChangeListener(interval);
         addInterval(interval);
-        isRunning = true;
         if (getOwnerProject().getStartTime() == 0) {
             getOwnerProject().start(getStartTime());
         }
     }
 
-    public void stop() {
+    /**
+     * Stops the task by stopping the last created interval.
+     * <p>
+     * Updates ending times of the task and its owner project.
+     */
+    final void stop() {
         int lastIndex = getIntervals().size() - 1;
         getIntervals().get(lastIndex).stop();
         setEndTime(getIntervals().get(lastIndex).getEndTime());
         getOwnerProject().stop();
-        isRunning = false;
     }
 
+    /**
+     * Checks if the <code>TaskImpl</code> is running.
+     * @return <code>true</code> if the task is running,
+     * <code>false</code> if it is not.
+     */
     @Override
     public boolean isRunning() {
         return getStartTime() != 0
