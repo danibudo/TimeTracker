@@ -1,60 +1,98 @@
 @startuml
 
-interface Activity extends Serializable {
+interface Activity {
 
-void acceptVisitor( Visitor visitor)
-String getName()
-long getDuration()
-long getEndTime()
-long getStartTime()
-}
-
-class Project implements Activity {
 Project ownerProject
-String getName
-List<Activity> activities
+String name
 long startTime
 long endTime
-boolean isListening
+long duration
+
+void acceptVisitor(Visitor visitor)
+void setName(final String activityName)
+String getName()
+void setOwnerProject(final Project project)
+Project getOwnerProject()
+void setEndTime(final long endingTime)
+void setStartTime(final long startingTime)
+long getStartTime()
+void setDuration(final long milliseconds)
+long getDuration()
+}
+
+class Project extends Activity {
+private List<Activity> activities
 
 Project(final Project ownerProject, final String projectName)
-void acceptVisitor( Visitor visitor);
-String getName()
 long getDuration()
-long getEndTime()
-long getStartTime()
-
-ArrayList<Activity> getActivities()
+void acceptVisitor(final Visitor visitor)
 void addActivity(final Activity activity)
+void removeActivity(final Activity activity)
+void start(final long time)
+void stop()
 boolean hasRunningTasks()
+ArrayList<Activity> getActivities()
 
 }
 
 Project o-- Activity
 
-class Task implements Activity {
+abstract class Task extends Activity {
 
-Project ownerProject
-String name
-private List<Interval> intervals;
-long endTime;
-long startTime;
-boolean isRunning;
+List<Interval> intervals
+addInterval(final Interval interval)
+void removeInterval(final Interval interval)
+List<Interval> getIntervals()
+void setIntervals(final List<Interval> intervalList)
+Task getTask()
+boolean isRunning()
+void start()
 
-Task(final Project ownerProject, final String taskName)
+}
+
+
+
+
+class TaskImpl extends Task {
+
+TaskImpl(final Project ownerProject, final String taskName)
 long getDuration()
-long getEndTime()
-long getStartTime()
 void acceptVisitor(Visitor visitor)
-String getName()
-void addInterval(final Interval interval)
 void start()
 void stop()
 boolean isRunning()
 
 }
 
-interface Visitor extends PropertyChangeListener {
+class PreprogrammedTask extends TaskDecorator {
+
+long startTime
+
+PreprogrammedTask(final Task task, final long milliseconds)
+long getStartTime()
+
+}
+
+abstract class TaskDecorator extends Task {
+
+Task task
+
+TaskDecorator(final Task decoratedTask)
+Task getTask()
+void setStartTime(final long milliseconds)
+void setEndTime(final long milliseconds)
+long getStartTime()
+long getEndTime()
+long getDuration()
+acceptVisitor(final Visitor visitor)
+start()
+isRunning()
+
+}
+
+TaskDecorator o-- Task
+
+interface Visitor {
 
 void visitProject(Project project);
 void visitTask(Task task);
@@ -72,25 +110,25 @@ void propertyChange(final PropertyChangeEvent propertyChangeEvent)
 void printHeader()
 }
 
-class Interval implements Serializable {
-private Task ownerTask
-private long startTime
-private long endTime
-private boolean isRunning
-private boolean readyToStopListening
+class Interval {
+long startTime
+long endTime
+long duration
 
 
-Interval(final Task ownerTask, final long startTime, final long finishTime)
-Interval(final Task ownerTask, final long startTime)
+Interval(final long startTime, final long finishTime)
+Interval(final long startTime)
 long getDuration()
 void stop()
-long getRemainingTime()
+void setStartTime(final long milliseconds)
+void setEndTime(final long milliseconds)
 long getStartTime()
 long getEndTime()
+void propertyChange(final PropertyChangeEvent propertyChangeEvent)
 
 }
 
-Interval o-- Task
+Interval --* Task
 
 
 class Clock {
@@ -109,4 +147,54 @@ run()
 
 }
 
+class Time {
+
+static final int HOURS_IN_DAY
+static final int MINUTES_IN_HOUR
+static final int SECONDS_IN_MINUTE
+static final int MILLISECONDS_IN_SECOND
+
+Time()
+long getDays(final long milliseconds)
+long getHours(final long milliseconds)
+long getMinutes(final long milliseconds)
+long getSeconds(final long milliseconds)
+long setDays(final int days)
+long setHours(final int hours)
+long setMinutes(final int minutes)
+long setSeconds(final int seconds)
+String getDateAndTime(final long milliseconds)
+String getTime(final long milliseconds)
+
+}
+
+
+class limitedTask extends TaskDecorator {
+long endTime
+
+LimitedTask(final Task task, final long milliseconds)
+long getEndTime()
+void start()
+Project getOwnerProject()
+
+}
+
+class Client {
+
+void main()
+
+testA1()
+testA2()
+decoratorTest()
+
+}
+
+Printer *-- Project
+
+Client -- Clock
+Clock -- Interval
+Client -- Printer
+
+Time -- Printer
+Time --Client
 @enduml
