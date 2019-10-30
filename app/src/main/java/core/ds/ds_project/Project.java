@@ -1,23 +1,17 @@
 package core.ds.ds_project;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project implements Activity {
-    private Project ownerProject;
-    private String name;
+public class Project extends Activity {
     private List<Activity> activities;
-    private long startTime;
-    private long endTime;
-    private long duration;
     private boolean isListening;
 
     public Project(final Project ownerProject, final String projectName) {
-        this.ownerProject = ownerProject;
-        this.name = projectName;
+        setOwnerProject(ownerProject);
+        setName(projectName);
         this.activities = new ArrayList<>();
-        this.duration = 0;
+        setDuration(0);
     }
 
     @Override
@@ -26,16 +20,12 @@ public class Project implements Activity {
         for (Activity activity : getActivities()) {
             taskDurations += activity.getDuration();
         }
-        duration = taskDurations;
-        return duration;
-    }
-
-    public Project getOwner() {
-        return ownerProject;
+        setDuration(taskDurations);
+        return super.getDuration();
     }
 
     @Override
-    public void acceptVisitor(Visitor visitor) {
+    public void acceptVisitor(final Visitor visitor) {
         visitor.visitProject(this);
         for (Activity activity : getActivities()) {
             activity.acceptVisitor(visitor);
@@ -50,26 +40,12 @@ public class Project implements Activity {
         activities.remove(activity);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public long getStartTime() {
-        return startTime;
-    }
-
-    @Override
-    public long getEndTime() {
-        return endTime;
-    }
-
     public void start(final long time) {
-        startTime = time;
+        setStartTime(time);
     }
 
     public void stop() {
-        endTime = Clock.getInstance().getCurrentTime();
+        setEndTime(Clock.getInstance().getCurrentTime());
     }
 
     public void setListening(final boolean listening) {

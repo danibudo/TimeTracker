@@ -1,7 +1,5 @@
 package core.ds.ds_project;
 
-import android.util.Printer;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -16,9 +14,9 @@ public class Interval implements PropertyChangeListener, Serializable {
 
     public Interval(final Task ownerTask, final long startTime, final long finishTime) {
         this.ownerTask = ownerTask;
-        this.startTime = startTime;
+        this.startTime = startTime + Clock.getInstance().getCurrentTime();
         this.endTime = finishTime;
-        this.isRunning = false;
+        this.isRunning = true;
         this.readyToStopListening = false;
         this.duration = 0;
     }
@@ -58,6 +56,14 @@ public class Interval implements PropertyChangeListener, Serializable {
         }
     }
 
+    public void setStartTime(final long milliseconds) {
+        startTime = milliseconds;
+    }
+
+    public void setEndTime(final long milliseconds) {
+        endTime = milliseconds;
+    }
+
     public long getStartTime() {
         return startTime;
     }
@@ -68,7 +74,7 @@ public class Interval implements PropertyChangeListener, Serializable {
 
     @Override
     public void propertyChange(final PropertyChangeEvent propertyChangeEvent) {
-        if (endTime == 0) {
+        if (endTime > Clock.getInstance().getCurrentTime() || endTime == 0) {
             long oldValue = (long) propertyChangeEvent.getOldValue();
             long newValue = (long) propertyChangeEvent.getNewValue();
             duration += newValue - oldValue;
