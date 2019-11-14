@@ -9,10 +9,84 @@ import java.io.ObjectOutputStream;
 
 public class Client {
     public static void main(final String[] args) {
-        testA1();
-//        testA2();
-//        decoratorTest();
+
     }
+
+
+
+    static void testFita2() {
+
+        Activity P1 = new Project(null,"P1");
+        Activity P2 = new Project (null,"P2")
+
+        Activity P1_2 = new Project((Project) P1,"P1_2");
+        ((Project) P1).addActivity(P1_2);
+
+
+        Activity T1 = new TaskImpl((Project)P1,"T1");
+        Activity T2 = new TaskImpl((Project)P1,"T2");
+        ((Project) P1).addActivity(T1);
+        ((Project) P1).addActivity(T2);
+
+        Activity T3 = new TaskImpl((Project)P2,"T3");
+        ((Project) P2).addActivity(T3);
+
+        Activity T4 = new TaskImpl((Project)P1_2,"T4");
+        ((Project) P1_2).addActivity(T4);
+
+        Clock clock = Clock.getInstance();
+
+        clock.run();
+
+        ((TaskImpl) T1).start();
+        ((TaskImpl) T4).start();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((TaskImpl) T1).stop();
+
+        ((TaskImpl) T2).start();
+
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((TaskImpl) T2).stop();
+        ((TaskImpl) T4).stop();
+
+        ((TaskImpl) T3).start();
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ((TaskImpl) T3).stop();
+        ((TaskImpl) T2).start();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((TaskImpl) T3).start();
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ((TaskImpl) T2).stop();
+        ((TaskImpl) T3).stop();
+
+        //Report.createReport();
+    }
+
 
     static void testA1() {
         Printer savedDataPrinter;
