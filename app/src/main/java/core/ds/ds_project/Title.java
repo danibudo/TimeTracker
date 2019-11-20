@@ -1,13 +1,13 @@
 package core.ds.ds_project;
 
-
 public class Title implements Elements {
-    public void accept(Text text){
+    @Override
+    public void accept(final Text text) {
         /// add implementation
     }
 
     @Override
-    public void accept(HTML Html) {
+    public void accept(final HTML html) {
         /// add implementation
     }
 }

@@ -3,9 +3,9 @@ import java.util.List;
 
 public abstract class Report {
 
-    private Project project;
-    private Format format;
-    List<Elements> elements;
+    protected Project project;
+    protected Format format;
+    protected List<Elements> elements;
 
     abstract void createReport();
 }
