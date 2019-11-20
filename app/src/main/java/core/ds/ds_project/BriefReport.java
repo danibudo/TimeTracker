@@ -5,6 +5,4 @@ public class BriefReport extends Report {
     public void createReport() {
 
     }
-
-
 }
