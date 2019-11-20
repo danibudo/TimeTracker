@@ -17,7 +17,7 @@ public class Client {
     static void testFita2() {
 
         Activity P1 = new Project(null,"P1");
-        Activity P2 = new Project (null,"P2")
+        Activity P2 = new Project (null,"P2");
 
         Activity P1_2 = new Project((Project) P1,"P1_2");
         ((Project) P1).addActivity(P1_2);

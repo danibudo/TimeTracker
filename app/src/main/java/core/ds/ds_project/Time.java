@@ -115,6 +115,24 @@ public final class Time {
                 String.format(Locale.ENGLISH, "%02d", second));
     }
     /**
+     * Turns a date written in milliseconds into a date representation
+     * in a dd-mm-yyyy format.
+     * @param milliseconds date in milliseconds
+     * @return <code>String</code> with date
+     */
+    static String getDate(final long milliseconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliseconds);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+
+        return String.format("%s-%s-%s %s:%s:%s",
+                String.format(Locale.ENGLISH, "%02d", day),
+                String.format(Locale.ENGLISH, "%02d", month),
+                String.format(Locale.ENGLISH, "%02d", year));
+    }
+    /**
      * Converts milliseconds into a time representation
      * in a hh:mm:ss format.
      * @param milliseconds date and time in milliseconds
