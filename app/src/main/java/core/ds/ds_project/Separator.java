@@ -14,11 +14,11 @@ public class Separator implements Elements {
 
     @Override
     public void accept(final Text text) {
-        /// add implementation
+        text.visit(this);
     }
 
     @Override
-    public void accept(final HTML Html) {
-        /// add implementation
+    public void accept(final HTML html) {
+        html.visit(this);
     }
 }

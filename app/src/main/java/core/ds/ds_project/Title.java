@@ -10,11 +10,11 @@ public class Title implements Elements {
     }
     @Override
     public void accept(final Text text) {
-        /// add implementation
+        text.visit(this);
     }
 
     @Override
     public void accept(final HTML html) {
-        /// add implementation
+        html.visit(this);
     }
 }

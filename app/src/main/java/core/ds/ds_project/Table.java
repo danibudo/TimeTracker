@@ -17,11 +17,11 @@ public class Table implements Elements {
 
     @Override
     public void accept(final Text text) {
-        /// add implementation
+        text.visit(this);
     }
     @Override
     public void accept(final HTML html) {
-        /// add implementation
+        html.visit(this);
     }
     public static Table createPeriodTable(final Report report) {
         String start = Time.getDate(report.getStartTime());
