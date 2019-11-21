@@ -24,4 +24,9 @@ public class HTML implements Format {
     public void visit(Table table){
         ///add implementatios
     }
+
+    @Override
+    public void finishPrinting() {
+
+    }
 }

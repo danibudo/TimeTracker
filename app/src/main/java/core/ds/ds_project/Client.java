@@ -6,10 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class Client {
     public static void main(final String[] args) {
-
+        testFita2();
     }
 
 
@@ -17,7 +18,7 @@ public class Client {
     static void testFita2() {
 
         Activity P1 = new Project(null,"P1");
-        Activity P2 = new Project (null,"P2");
+        Activity P2 = new Project(null,"P2");
 
         Activity P1_2 = new Project((Project) P1,"P1_2");
         ((Project) P1).addActivity(P1_2);
@@ -35,6 +36,11 @@ public class Client {
         ((Project) P1_2).addActivity(T4);
 
         Clock clock = Clock.getInstance();
+
+        Printer printer1 = new Printer((Project) P1);
+        clock.addPropertyChangeListener(printer1);
+        Printer printer2 = new Printer((Project) P2);
+        clock.addPropertyChangeListener(printer2);
 
         clock.run();
 
@@ -84,7 +90,14 @@ public class Client {
         ((TaskImpl) T2).stop();
         ((TaskImpl) T3).stop();
 
-        //Report.createReport();
+        ArrayList<Project> list = new ArrayList<>();
+        list.add((Project) P1);
+        list.add((Project) P2);
+
+        BriefReport report = new BriefReport();
+        report.createReport(list, new Text(),
+                Clock.getInstance().getCurrentTime() - Time.setSeconds(20),
+                Clock.getInstance().getCurrentTime());
     }
 
 

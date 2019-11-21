@@ -5,8 +5,12 @@ import java.io.PrintWriter;
 
 public class Text implements Format {
     private PrintWriter writer;
-    Text() throws FileNotFoundException {
-        writer = new PrintWriter("textReport.txt");
+    Text() {
+        try {
+            writer = new PrintWriter("tmp/textReport.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -31,5 +35,13 @@ public class Text implements Format {
      */
     public void visit(final Table table) {
         writer.println(table.getContent());
+    }
+
+    /**
+     * Closes the report file.
+      */
+    @Override
+    public void finishPrinting() {
+        writer.close();
     }
 }

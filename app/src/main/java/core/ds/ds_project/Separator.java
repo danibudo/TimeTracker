@@ -1,6 +1,6 @@
 package core.ds.ds_project;
 
-public class Separator implements Elements {
+public class Separator implements Element {
     private static final int LENGTH = 99;
     private String separator;
 
@@ -13,12 +13,7 @@ public class Separator implements Elements {
     }
 
     @Override
-    public void accept(final Text text) {
-        text.visit(this);
-    }
-
-    @Override
-    public void accept(final HTML html) {
-        html.visit(this);
+    public void accept(final Format format) {
+        format.visit(this);
     }
 }

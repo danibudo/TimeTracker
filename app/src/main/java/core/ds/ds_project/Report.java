@@ -3,13 +3,16 @@ import java.util.List;
 
 public abstract class Report {
 
-    protected Project project;
+    protected List<Project> projects;
     protected Format format;
-    protected List<Elements> elements;
-    private long startTime;
-    private long endTime;
+    protected List<Element> elements;
+    protected long startTime;
+    protected long endTime;
 
-    abstract void createReport();
+    abstract void createReport(List<Project> rootProject, Format reportFormat,
+                               long start, long end);
+    abstract void writeToFile();
+
     protected long getStartTime() {
         return startTime;
     }

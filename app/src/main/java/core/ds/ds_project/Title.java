@@ -1,6 +1,6 @@
 package core.ds.ds_project;
 
-public class Title implements Elements {
+public class Title implements Element {
     private String title;
     Title(final String titleName) {
         title = titleName;
@@ -9,12 +9,7 @@ public class Title implements Elements {
         return title;
     }
     @Override
-    public void accept(final Text text) {
-        text.visit(this);
-    }
-
-    @Override
-    public void accept(final HTML html) {
-        html.visit(this);
+    public void accept(final Format format) {
+        format.visit(this);
     }
 }

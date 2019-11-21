@@ -3,7 +3,7 @@ package core.ds.ds_project;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table implements Elements {
+public class Table implements Element {
     private String name;
     private List<String> content;
     private Table(final String tableName) {
@@ -16,13 +16,10 @@ public class Table implements Elements {
     }
 
     @Override
-    public void accept(final Text text) {
-        text.visit(this);
+    public void accept(final Format format) {
+        format.visit(this);
     }
-    @Override
-    public void accept(final HTML html) {
-        html.visit(this);
-    }
+
     public static Table createPeriodTable(final Report report) {
         String start = Time.getDate(report.getStartTime());
         String end = Time.getDate(report.getEndTime());
