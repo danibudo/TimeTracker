@@ -34,6 +34,9 @@ public class Table implements Element {
         String current = Time.getDateAndTime(Clock.getInstance().getCurrentTime());
 
         Table table = new Table("Periode", 2);
+
+        table.content.add("\t\t\t");
+        table.content.add("Data");
         table.content.add("Des de\t\t");
         table.content.add(start);
         table.content.add("Fins a\t\t");

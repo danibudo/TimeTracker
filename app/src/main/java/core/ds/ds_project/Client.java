@@ -96,7 +96,7 @@ public class Client {
         list.add((Project) P2);
 
         DetailedReport report = new DetailedReport(list);
-        report.createReport(new Text(),
+        report.createReport(new HTML(),
                 Clock.getInstance().getCurrentTime() - Time.setSeconds(16),
                 Clock.getInstance().getCurrentTime() - Time.setSeconds(6));
     }
