@@ -33,6 +33,15 @@ public class Project extends Activity {
         return super.getDuration();
     }
 
+    @Override
+    public long getDuration(final long periodStart, final long periodFinish) {
+        long projectDuration = 0;
+        for (Activity activity : getActivities()) {
+            projectDuration += activity.getDuration(periodStart, periodFinish);
+        }
+        return projectDuration;
+    }
+
     /**
      * When a <code>Visitor</code> tries to access the object,
      * this method accepts the visitor and helps it access

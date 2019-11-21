@@ -33,6 +33,19 @@ public class Interval implements PropertyChangeListener, Serializable {
         return duration;
     }
 
+    final long getDuration(final long periodStart, final long periodFinish) {
+        long intervalDuration = getDuration();
+        if (periodStart > getStartTime()) {
+            intervalDuration -= periodStart - getStartTime();
+        }
+        if (periodFinish < getEndTime()) {
+            intervalDuration -= getEndTime() - periodFinish;
+        }
+        intervalDuration = Time.getSeconds(intervalDuration);
+        intervalDuration = Time.setSeconds((int) intervalDuration);
+        return intervalDuration;
+    }
+
     final void stop() {
         endTime = Clock.getInstance().getCurrentTime();
     }

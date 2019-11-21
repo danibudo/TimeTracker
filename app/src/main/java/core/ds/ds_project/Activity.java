@@ -96,4 +96,13 @@ public abstract class Activity implements Serializable {
     public long getDuration() {
         return duration;
     }
+
+    /**
+     * Gets the duration of the <code>Activity</code> taking into account
+     * the period of a report.
+     * @param periodStart the starting time of the report
+     * @param periodFinish the finishing time of the report
+     * @return The activity's duration
+     */
+    public abstract long getDuration(long periodStart, long periodFinish);
 }

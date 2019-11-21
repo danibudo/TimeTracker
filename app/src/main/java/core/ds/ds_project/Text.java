@@ -34,7 +34,18 @@ public class Text implements Format {
      * @param table The table to visit
      */
     public void visit(final Table table) {
-        writer.println(table.getContent());
+        writer.println(table.getName());
+        int columns = table.getColumnCount();
+        int iterator = 1;
+        for (String info : table.getContent()) {
+            writer.print(info);
+            if (iterator == columns) {
+               writer.println();
+               iterator = 1;
+            } else {
+                iterator++;
+            }
+        }
     }
 
     /**

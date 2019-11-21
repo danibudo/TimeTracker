@@ -60,4 +60,13 @@ public abstract class Task extends Activity {
         list.add(this);
         return list;
     }
+
+    @Override
+    public long getDuration(final long periodStart, final long periodFinish) {
+        long taskDuration = 0;
+        for (Interval interval : getIntervals()) {
+            taskDuration += interval.getDuration(periodStart, periodFinish);
+        }
+        return taskDuration;
+    }
 }

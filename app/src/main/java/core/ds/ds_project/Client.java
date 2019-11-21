@@ -51,6 +51,7 @@ public class Client {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         ((TaskImpl) T1).stop();
 
         ((TaskImpl) T2).start();
@@ -94,10 +95,10 @@ public class Client {
         list.add((Project) P1);
         list.add((Project) P2);
 
-        BriefReport report = new BriefReport();
-        report.createReport(list, new Text(),
-                Clock.getInstance().getCurrentTime() - Time.setSeconds(20),
-                Clock.getInstance().getCurrentTime());
+        DetailedReport report = new DetailedReport(list);
+        report.createReport(new Text(),
+                Clock.getInstance().getCurrentTime() - Time.setSeconds(16),
+                Clock.getInstance().getCurrentTime() - Time.setSeconds(6));
     }
 
 

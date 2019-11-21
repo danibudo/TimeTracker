@@ -127,7 +127,7 @@ public final class Time {
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
 
-        return String.format("%s-%s-%s %s:%s:%s",
+        return String.format("%s-%s-%s",
                 String.format(Locale.ENGLISH, "%02d", day),
                 String.format(Locale.ENGLISH, "%02d", month),
                 String.format(Locale.ENGLISH, "%02d", year));
