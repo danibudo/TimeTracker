@@ -1,6 +1,7 @@
 package core.ds.ds_project;
 
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class Activity implements Serializable {
     private Project ownerProject;
@@ -9,6 +10,12 @@ public abstract class Activity implements Serializable {
     private long endTime;
     private long duration;
     abstract void acceptVisitor(Visitor visitor);
+
+    /**
+     * Gets the tasks that an activity possesses.
+     * @return a list of tasks
+     */
+    abstract List<Task> getTasks();
 
     /**
      * Sets the name of the <code>Activity</code>.

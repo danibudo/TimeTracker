@@ -49,4 +49,15 @@ public abstract class Task extends Activity {
 
     abstract boolean isRunning();
     abstract void start();
+
+    /**
+     * Gets the task instance.
+     * @return the task instance
+     */
+    @Override
+    List<Task> getTasks() {
+        ArrayList<Task> list = new ArrayList<>();
+        list.add(this);
+        return list;
+    }
 }

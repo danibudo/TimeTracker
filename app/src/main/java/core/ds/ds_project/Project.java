@@ -89,4 +89,17 @@ public class Project extends Activity {
         //noinspection unchecked
         return (ArrayList<Activity>) copy;
     }
+
+    /**
+     * Gets the task of the project and its child projects.
+     * @return a list of tasks
+     */
+    @Override
+    List<Task> getTasks() {
+        ArrayList<Task> list = new ArrayList<>();
+        for (Activity activity : getActivities()) {
+            list.addAll(activity.getTasks());
+        }
+        return list;
+    }
 }
