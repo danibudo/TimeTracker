@@ -1,6 +1,6 @@
 package core.ds.ds_project;
 
-public class Title extends Element {
+public class Title implements Element {
     private String title;
     Title(final String titleName) {
         title = titleName;
