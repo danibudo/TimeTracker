@@ -15,6 +15,7 @@ public abstract class Task extends Activity {
      * @param interval The <code>Interval</code> to be added.
      */
     final void addInterval(final Interval interval) {
+        assert invariant() : "Invalid Task";
         if (intervals.isEmpty()) {
             setStartTime(interval.getStartTime());
         }
@@ -33,6 +34,7 @@ public abstract class Task extends Activity {
         intervals.remove(interval);
     }
     final List<Interval> getIntervals() {
+        assert invariant() : "Invalid Task";
         return intervals;
     }
     final void setIntervals(final List<Interval> intervalList) {
@@ -44,6 +46,7 @@ public abstract class Task extends Activity {
      * @return The <code>Task</code> instance.
      */
     public Task getTask() {
+        assert invariant() : "Invalid Task";
         return this;
     }
 
@@ -57,7 +60,7 @@ public abstract class Task extends Activity {
     @Override
     List<Task> getTasks() {
         ArrayList<Task> list = new ArrayList<>();
-        list.add(this);
+        list.add(getTask());
         return list;
     }
 
@@ -69,10 +72,22 @@ public abstract class Task extends Activity {
      */
     @Override
     public long getDuration(final long periodStart, final long periodFinish) {
+        assert invariant() : "Invalid Task";
         long taskDuration = 0;
         for (Interval interval : getIntervals()) {
             taskDuration += interval.getDuration(periodStart, periodFinish);
         }
         return taskDuration;
+    }
+
+    /**
+     * Fires a set of assertions that must always hold true.
+     * @return a <code>boolean</code> value describing if the invariant
+     * has been satisfied
+     */
+    boolean invariant() {
+        return intervals != null
+        && getDuration() >= 0
+        && getTask() != null;
     }
 }

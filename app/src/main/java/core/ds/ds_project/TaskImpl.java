@@ -9,6 +9,7 @@ public class TaskImpl extends Task {
 
     @Override
     public final long getDuration() {
+        assert invariant() : "Invalid Task";
         long intervalDurations = 0;
         for (Interval interval : getIntervals()) {
             intervalDurations += interval.getDuration();
@@ -33,6 +34,7 @@ public class TaskImpl extends Task {
      */
     @Override
     public void start() {
+        assert invariant() : "Invalid Task";
         Interval interval = new Interval(0);
         Clock.getInstance().addPropertyChangeListener(interval);
         addInterval(interval);
@@ -47,6 +49,7 @@ public class TaskImpl extends Task {
      * Updates ending times of the task and its owner project.
      */
     final void stop() {
+        assert invariant() : "Invalid Task";
         int lastIndex = getIntervals().size() - 1;
         getIntervals().get(lastIndex).stop();
         setEndTime(getIntervals().get(lastIndex).getEndTime());
@@ -60,6 +63,7 @@ public class TaskImpl extends Task {
      */
     @Override
     public boolean isRunning() {
+        assert invariant() : "Invalid Task";
         return getStartTime() != 0
                 && getEndTime() != 0
                 && Clock.getInstance().getCurrentTime() < getEndTime();
