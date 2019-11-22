@@ -30,6 +30,7 @@ public class Interval implements PropertyChangeListener, Serializable {
     }
 
     final long getDuration() {
+        if(duration<0) throw new IllegalStateException();
         return duration;
     }
 
@@ -43,6 +44,8 @@ public class Interval implements PropertyChangeListener, Serializable {
         }
         intervalDuration = Time.getSeconds(intervalDuration);
         intervalDuration = Time.setSeconds((int) intervalDuration);
+
+        if(intervalDuration<0) throw new IllegalStateException();
         return intervalDuration;
     }
 
@@ -58,11 +61,23 @@ public class Interval implements PropertyChangeListener, Serializable {
         endTime = milliseconds;
     }
 
+    /**
+     * @return <code>startTime</code>
+     */
     final long getStartTime() {
+
+        if(startTime<0) throw new IllegalStateException();
+
         return startTime;
     }
 
+    /**
+     * @return <code>endTime</code>
+     */
     final long getEndTime() {
+
+        if(endTime<0 || endTime<startTime) throw new IllegalStateException();
+
         return endTime;
     }
 
