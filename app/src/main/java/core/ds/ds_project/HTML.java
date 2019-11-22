@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 public class HTML extends Format {
     HTML() {
         try {
-            setWriter(new PrintWriter("tmp/textReport.html"));
+            setWriter(new PrintWriter("tmp/Report.html"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
