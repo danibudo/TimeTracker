@@ -74,10 +74,9 @@ public class Table implements Element {
         table.content.add("Data final\t\t");
         table.content.add("Temps total\n");
         for (Project project : rootProjects) {
-            if (Time.getSeconds(project.getEndTime())
-                    > Time.getSeconds(reportStartTime)
-                    && Time.getSeconds(project.getStartTime())
-                    < Time.getSeconds(reportEndTime)) {
+            boolean shouldInclude = shouldBeIncluded(project,
+                    reportStartTime, reportEndTime);
+            if (shouldInclude) {
                 table.content.add(project.getName() + "\t");
                 String start = Time.getDateAndTime(project.getStartTime());
                 if (start.equals("")) {
@@ -118,11 +117,9 @@ public class Table implements Element {
         table.content.add("Temps total\n");
         for (Project project : rootProjects) {
             for (Activity activity : project.getActivities()) {
-                if (activity instanceof Project
-                        && (Time.getSeconds(activity.getEndTime())
-                        > Time.getSeconds(reportStartTime)
-                         && Time.getSeconds(activity.getStartTime())
-                        < Time.getSeconds(reportEndTime))) {
+                boolean shouldInclude = shouldBeIncluded(activity,
+                        reportStartTime, reportEndTime);
+                if (activity instanceof Project && shouldInclude) {
                     table.content.add(activity.getName() + "\t");
                     table.content.add(activity.getOwnerProjectName() + "\t");
                     String start = Time.getDateAndTime(activity.getStartTime());
@@ -165,10 +162,9 @@ public class Table implements Element {
         table.content.add("Temps total\n");
         for (Project project : rootProjects) {
             for (Task task : project.getTasks()) {
-                if (Time.getSeconds(task.getEndTime())
-                        > Time.getSeconds(reportStartTime)
-                        && Time.getSeconds(task.getStartTime())
-                        < Time.getSeconds(reportEndTime)) {
+                boolean shouldInclude = shouldBeIncluded(task,
+                        reportStartTime, reportEndTime);
+                if (shouldInclude) {
                     table.content.add(task.getName() + "\t");
                     table.content.add(task.getOwnerProjectName() + "\t");
                     String start = Time.getDateAndTime(task.getStartTime());
@@ -216,10 +212,9 @@ public class Table implements Element {
                 String taskName = task.getName();
                 int intervalNumber = 1;
                 for (Interval interval : task.getIntervals()) {
-                    if (Time.getSeconds(interval.getEndTime())
-                            > Time.getSeconds(reportStartTime)
-                            && Time.getSeconds(interval.getStartTime())
-                            < Time.getSeconds(reportEndTime)) {
+                    boolean shouldInclude = shouldBeIncluded(interval,
+                            reportStartTime, reportEndTime);
+                    if (shouldInclude) {
                         table.content.add(taskName + "\t");
                         table.content.add(projectName + "\t");
                         table.content.add(intervalNumber + "\t");
@@ -246,5 +241,36 @@ public class Table implements Element {
             }
         }
         return table;
+    }
+
+    /**
+     * Checks if an <code>Activity</code> should be included in a report.
+     * @param activity the activity to verify
+     * @param startTime the report's starting time
+     * @param endTime the report's ending time
+     * @return true if the <code>Activity</code> should be included, else false
+     */
+    private static boolean shouldBeIncluded(final Activity activity,
+                                    final long startTime,
+                                    final long endTime) {
+        return Time.getSeconds(activity.getEndTime())
+                > Time.getSeconds(startTime)
+                && Time.getSeconds(activity.getStartTime())
+                < Time.getSeconds(endTime);
+    }
+    /**
+     * Checks if an <code>Interval</code> should be included in a report.
+     * @param interval the interval to verify
+     * @param startTime the report's starting time
+     * @param endTime the report's ending time
+     * @return true if the <code>Interval</code> should be included, else false
+     */
+    private static boolean shouldBeIncluded(final Interval interval,
+                                    final long startTime,
+                                    final long endTime) {
+        return Time.getSeconds(interval.getEndTime())
+                > Time.getSeconds(startTime)
+                && Time.getSeconds(interval.getStartTime())
+                < Time.getSeconds(endTime);
     }
 }
