@@ -75,8 +75,12 @@ public abstract class Task extends Activity {
         assert invariant() : "Invalid Task";
         long taskDuration = 0;
         for (Interval interval : getIntervals()) {
-            taskDuration += interval.getDuration(periodStart, periodFinish);
+            long duration = interval.getDuration(periodStart, periodFinish);
+            if (duration > 0) {
+                taskDuration += duration;
+            }
         }
+
         return taskDuration;
     }
 
