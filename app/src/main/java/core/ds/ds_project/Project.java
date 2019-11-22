@@ -33,6 +33,12 @@ public class Project extends Activity {
         return super.getDuration();
     }
 
+    /**
+     * Gets the duration that should be shown in a report.
+     * @param periodStart starting time of the report's period
+     * @param periodFinish ending time of the report's period
+     * @return the duration of the project
+     */
     @Override
     public long getDuration(final long periodStart, final long periodFinish) {
         long projectDuration = 0;

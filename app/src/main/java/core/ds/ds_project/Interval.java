@@ -33,6 +33,12 @@ public class Interval implements PropertyChangeListener, Serializable {
         return duration;
     }
 
+    /**
+     * Gets the duration that should be shown in a report.
+     * @param periodStart starting time of the report's period
+     * @param periodFinish ending time of the report's period
+     * @return the duration of the interval
+     */
     final long getDuration(final long periodStart, final long periodFinish) {
         long intervalDuration = getDuration();
         if (periodStart > getStartTime()) {

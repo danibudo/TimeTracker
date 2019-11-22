@@ -13,25 +13,36 @@ public class Table implements Element {
         content = new ArrayList<>();
     }
 
-    public List<String> getContent() {
+    List<String> getContent() {
         return content;
     }
-    public int getColumnCount() {
+    int getColumnCount() {
         return columnCount;
     }
-    public String getName() {
+    String getName() {
         return name;
     }
 
+    /**
+     * Accepts a visitor to allow it to print the <code>Table</code>.
+     * @param format the visitor that accesses the object
+     */
     @Override
     public void accept(final Format format) {
         format.visit(this);
     }
 
-    public static Table createPeriodTable(final Report report) {
+    /**
+     * Creates a table that contains information about the period
+     * of the inform.
+     * @param report the report to take into account
+     * @return the period table
+     */
+    static Table createPeriodTable(final Report report) {
         String start = Time.getDateAndTime(report.getStartTime());
         String end = Time.getDateAndTime(report.getEndTime());
-        String current = Time.getDateAndTime(Clock.getInstance().getCurrentTime());
+        String current = Time.getDateAndTime(
+                Clock.getInstance().getCurrentTime());
 
         Table table = new Table("Periode", 2);
 
@@ -45,9 +56,18 @@ public class Table implements Element {
         table.content.add(current);
         return table;
     }
-    public static Table createProjectTable(final long reportStartTime,
-                                           final long reportEndTime,
-                                           final List<Project> rootProjects) {
+
+    /**
+     * Creates a table that contains information about the projects
+     * of the inform.
+     * @param reportStartTime the report's starting time
+     * @param reportEndTime the report's ending time
+     * @param rootProjects the report's root projects
+     * @return the project table
+     */
+    static Table createProjectTable(final long reportStartTime,
+                                    final long reportEndTime,
+                                    final List<Project> rootProjects) {
         Table table = new Table("Projectes de primer nivell", 4);
         table.content.add("\t");
         table.content.add("Data inici\t\t");
@@ -79,7 +99,15 @@ public class Table implements Element {
         }
         return table;
     }
-    public static Table createSubprojectTable(final long reportStartTime,
+    /**
+     * Creates a table that contains information about the subprojects
+     * of the inform.
+     * @param reportStartTime the report's starting time
+     * @param reportEndTime the report's ending time
+     * @param rootProjects the report's root projects
+     * @return the subproject table
+     */
+    static Table createSubprojectTable(final long reportStartTime,
                                               final long reportEndTime,
                                               final List<Project> rootProjects) {
         Table table = new Table("Subprojectes", 5);
@@ -96,7 +124,7 @@ public class Table implements Element {
                          && Time.getSeconds(activity.getStartTime())
                         < Time.getSeconds(reportEndTime))) {
                     table.content.add(activity.getName() + "\t");
-                    table.content.add(activity.getOwnerProject().getName() + "\t");
+                    table.content.add(activity.getOwnerProjectName() + "\t");
                     String start = Time.getDateAndTime(activity.getStartTime());
                     if (start.equals("")) {
                         table.content.add("\t\t\t");
@@ -118,7 +146,15 @@ public class Table implements Element {
         }
         return table;
     }
-    public static Table createTaskTable(final long reportStartTime,
+    /**
+     * Creates a table that contains information about the tasks
+     * of the inform.
+     * @param reportStartTime the report's starting time
+     * @param reportEndTime the report's ending time
+     * @param rootProjects the report's root projects
+     * @return the task table
+     */
+    static Table createTaskTable(final long reportStartTime,
                                         final long reportEndTime,
                                         final List<Project> rootProjects) {
         Table table = new Table("Tasques", 5);
@@ -134,7 +170,7 @@ public class Table implements Element {
                         && Time.getSeconds(task.getStartTime())
                         < Time.getSeconds(reportEndTime)) {
                     table.content.add(task.getName() + "\t");
-                    table.content.add(task.getOwnerProject().getName() + "\t");
+                    table.content.add(task.getOwnerProjectName() + "\t");
                     String start = Time.getDateAndTime(task.getStartTime());
                     if (start.equals("")) {
                         table.content.add("\t\t\t");
@@ -156,7 +192,15 @@ public class Table implements Element {
         }
         return table;
     }
-    public static Table createIntervalTable(final long reportStartTime,
+    /**
+     * Creates a table that contains information about the interval
+     * of the inform.
+     * @param reportStartTime the report's starting time
+     * @param reportEndTime the report's ending time
+     * @param rootProjects the report's root projects
+     * @return the interval table
+     */
+    static Table createIntervalTable(final long reportStartTime,
                                             final long reportEndTime,
                                             final List<Project> rootProjects) {
         Table table = new Table("Intervals", 6);
@@ -168,7 +212,7 @@ public class Table implements Element {
         table.content.add("Durada\n");
         for (Project project : rootProjects) {
             for (Task task : project.getTasks()) {
-                String projectName = task.getOwnerProject().getName();
+                String projectName = task.getOwnerProjectName();
                 String taskName = task.getName();
                 int intervalNumber = 1;
                 for (Interval interval : task.getIntervals()) {

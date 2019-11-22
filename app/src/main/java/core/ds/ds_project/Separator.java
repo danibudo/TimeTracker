@@ -8,10 +8,18 @@ public class Separator implements Element {
         separator = new String(new char[LENGTH]).replace("\0", "-");
     }
 
-    public String getSeparator() {
+    /**
+     * Gets the <code>String</code> with the separator.
+     * @return the separator
+     */
+    String getSeparator() {
         return separator;
     }
 
+    /**
+     * Accepts a visitor to allow it to print the <code>Separator</code>.
+     * @param format the visitor that accesses the object
+     */
     @Override
     public void accept(final Format format) {
         format.visit(this);

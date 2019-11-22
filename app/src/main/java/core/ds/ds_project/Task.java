@@ -61,6 +61,12 @@ public abstract class Task extends Activity {
         return list;
     }
 
+    /**
+     * Gets the duration that should be shown in a report.
+     * @param periodStart starting time of the report's period
+     * @param periodFinish ending time of the report's period
+     * @return the duration of the task
+     */
     @Override
     public long getDuration(final long periodStart, final long periodFinish) {
         long taskDuration = 0;

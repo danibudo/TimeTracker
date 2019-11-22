@@ -50,6 +50,14 @@ public abstract class Activity implements Serializable {
     }
 
     /**
+     * Gets the name of the <code>Project</code> of the <code>Activity</code>.
+     * @return The activity's name.
+     */
+    public String getOwnerProjectName() {
+        return getOwnerProject().getName();
+    }
+
+    /**
      * Sets the time when the <code>Activity</code> should finish.
      * @param endingTime The activity's ending time.
      */

@@ -3,56 +3,47 @@ package core.ds.ds_project;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class Text implements Format {
-    private PrintWriter writer;
+public class Text extends Format {
     Text() {
         try {
-            writer = new PrintWriter("tmp/textReport.txt");
+            setWriter(new PrintWriter("tmp/textReport.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Text visitor for title.
-     * @param title The title to visit
+     * Visits a <code>Title</code> in order to write it to a text file.
+     * @param title the title to visit
      */
     public void visit(final Title title) {
-        writer.println(title.getTitle());
+        getWriter().println(title.getTitle());
     }
 
     /**
-     * Text visitor for separator.
-     * @param separator The separator to visit
+     * Visits a <code>Separator</code> in order to write it to a text file.
+     * @param separator the separator to visit
      */
     public void visit(final Separator separator) {
-        writer.println(separator.getSeparator());
+        getWriter().println(separator.getSeparator());
     }
 
     /**
-     * Text visitor for table.
-     * @param table The table to visit
+     * Visits a <code>Table</code> in order to write it to a text file.
+     * @param table the table to visit
      */
     public void visit(final Table table) {
-        writer.println(table.getName());
+        getWriter().println(table.getName());
         int columns = table.getColumnCount();
         int iterator = 1;
         for (String info : table.getContent()) {
-            writer.print(info);
+            getWriter().print(info);
             if (iterator == columns) {
-               writer.println();
+               getWriter().println();
                iterator = 1;
             } else {
                 iterator++;
             }
         }
-    }
-
-    /**
-     * Closes the report file.
-      */
-    @Override
-    public void finishPrinting() {
-        writer.close();
     }
 }

@@ -3,37 +3,37 @@ package core.ds.ds_project;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class HTML implements Format {
-    private PrintWriter writer;
+public class HTML extends Format {
     HTML() {
         try {
-            writer = new PrintWriter("tmp/textReport.html");
+            setWriter(new PrintWriter("tmp/textReport.html"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * HTML visitor for title
-     * @param title The title to visit
+     * Visits a <code>Title</code> in order to write it to an HTML file.
+     * @param title the title to visit
      */
     public void visit(final Title title) {
-        writer.println("<h1>" + title.getTitle() + "</h1>");
+        getWriter().println("<h1>" + title.getTitle() + "</h1>");
     }
 
     /**
-     * HTML visitor for separator
-     * @param separator The separator to visit
+     * Visits a <code>Separator</code> in order to write it to an HTML file.
+     * @param separator the separator to visit
      */
     public void visit(final Separator separator) {
-        writer.println("<hr>");
+        getWriter().println("<hr>");
     }
 
     /**
-     * HTML visitor for table
-     * @param table The table to visit
+     * Visits a <code>Table</code> in order to write it to an HTML file.
+     * @param table the table to visit
      */
     public void visit(final Table table) {
+        PrintWriter writer = getWriter();
         writer.println("<style>");
         writer.println("table, th, td {border: 1px ridge black;}");
         writer.println("</style>");
@@ -61,13 +61,5 @@ public class HTML implements Format {
             }
         }
         writer.println("</table>");
-    }
-
-    /**
-     * Closes the report file.
-     */
-    @Override
-    public void finishPrinting() {
-        writer.close();
     }
 }
