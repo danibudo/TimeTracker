@@ -26,6 +26,7 @@ public class TaskImpl extends Task {
      */
     @Override
     public void acceptVisitor(final Visitor visitor) {
+        assert visitor != null : "Trying to accept null visitor";
         visitor.visitTask(this);
     }
 
