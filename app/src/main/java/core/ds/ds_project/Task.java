@@ -15,6 +15,9 @@ public abstract class Task extends Activity {
      * @param interval The <code>Interval</code> to be added.
      */
     final void addInterval(final Interval interval) {
+        System.out.println();
+        logger.info("Added interval to task " + getName());
+
         assert invariant() : "Invalid Task";
         if (intervals.isEmpty()) {
             setStartTime(interval.getStartTime());

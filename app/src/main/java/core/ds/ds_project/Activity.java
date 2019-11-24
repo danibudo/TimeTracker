@@ -1,9 +1,13 @@
 package core.ds.ds_project;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
 public abstract class Activity implements Serializable {
+    protected static Logger logger = LoggerFactory.getLogger(Activity.class);
     private Project ownerProject;
     private String name;
     private long startTime;

@@ -72,10 +72,16 @@ public class Project extends Activity {
 
     final void start(final long time) {
         setStartTime(time);
+        System.out.println();
+        logger.info("Project started at "
+                + Time.getDateAndTime(getStartTime()));
     }
 
     final void stop() {
         setEndTime(Clock.getInstance().getCurrentTime());
+        System.out.println();
+        logger.info("Project stopped at "
+                + Time.getDateAndTime(Clock.getInstance().getCurrentTime()));
     }
 
     final boolean hasRunningTasks() {
@@ -90,6 +96,10 @@ public class Project extends Activity {
                     result = true;
                 }
             }
+        }
+        if (!result) {
+            System.out.println();
+            logger.warn("Project has no running tasks");
         }
         return result;
     }

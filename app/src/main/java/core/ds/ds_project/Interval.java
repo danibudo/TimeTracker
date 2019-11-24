@@ -1,10 +1,14 @@
 package core.ds.ds_project;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
 public class Interval implements PropertyChangeListener, Serializable {
+    private static Logger logger = LoggerFactory.getLogger(Interval.class);
     private long startTime;
     private long endTime;
     private long duration;
@@ -55,6 +59,8 @@ public class Interval implements PropertyChangeListener, Serializable {
 
     final void stop() {
         endTime = Clock.getInstance().getCurrentTime();
+        System.out.println();
+        logger.info("Interval stopped at " + Time.getDateAndTime(endTime));
     }
 
     final void setStartTime(final long milliseconds) {
