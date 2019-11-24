@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 public class Text extends Format {
     Text() {
         try {
-            setWriter(new PrintWriter("tmp/textReport.txt"));
+            setWriter(new PrintWriter("tmp/Report.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
