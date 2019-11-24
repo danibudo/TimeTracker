@@ -5,6 +5,7 @@ public class LimitedTask extends TaskDecorator {
 
     LimitedTask(final Task task, final long milliseconds) {
         super(task.getTask());
+        assert null != task : "Getting null task as parameter";
         setTask(task.getTask());
         setIntervals(task.getTask().getIntervals());
         this.setOwnerProject(task.getTask().getOwnerProject());

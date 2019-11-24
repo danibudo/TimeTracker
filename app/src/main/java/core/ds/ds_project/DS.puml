@@ -197,4 +197,123 @@ Client -- Printer
 
 Time -- Printer
 Time --Client
+
+
+abstract class Report {
+
+private List<Project> projects
+private Format format
+private List<Element> elements
+private long startTime
+private long endTime
+
+abstract void createReport(Format reportFormat, long start, long end)
+public long getStartTime()
+public long getEndTime()
+void makeBriefReport(final Format reportFormat, final String title, final long start, final long end)
+void writeToFile()
+List<Project> getProjects()
+void setProjects(final List<Project> rootProjects)
+List<Element> getElements()
+void setElements(final List<Element> reportElements)
+Format getFormat()
+
+}
+
+class BriefReport extends Report {
+
+BriefReport(final List<Project> rootProjects)
+void createReport(final Format reportFormat, final long start, final long end)
+
+}
+
+class detailedReport extends Report {
+
+DetailedReport(final List<Project> rootProjects)
+void createReport(final Format reportFormat, final long start, final long end)
+
+
+}
+
+
+interface Element {
+void accept(Format format)
+}
+
+class Title implements Element {
+private String title
+
+Title(final String titleName)
+String getTitle()
+public void accept(final Format format)
+
+}
+
+class Table implements Element {
+
+private String name;
+private List<String> content;
+private int columnCount;
+
+private Table(final String tableName, final int columns)
+List<String> getContent()
+int getColumnCount()
+String getName()
+public void accept(final Format format)
+static Table createPeriodTable(final Report report)
+static Table createProjectTable(final long reportStartTime, final long reportEndTime, final List<Project> rootProjects)
+static Table createSubprojectTable(final long reportStartTime, final long reportEndTime, final List<Project> rootProjects)
+static Table createTaskTable(final long reportStartTime, final long reportEndTime, final List<Project> rootProjects)
+static Table createIntervalTable(final long reportStartTime, final long reportEndTime, final List<Project> rootProjects)
+private static boolean shouldBeIncluded(final Activity activity, final long startTime, final long endTime)
+private static boolean shouldBeIncluded(final Interval interval, final long startTime, final long endTime)
+
+}
+
+class Separator implements Element {
+
+private static final int LENGTH = 99;
+private String separator;
+
+Separator()
+String getSeparator()
+public void accept(final Format format)
+}
+
+
+abstract class Format {
+
+private PrintWriter writer;
+
+abstract void visit(Title title);
+abstract void visit(Separator separator);
+abstract void visit(Table table);
+
+void finishPrinting()
+PrintWriter getWriter()
+void setWriter(final PrintWriter printWriter)
+
+}
+
+
+class HTML extends Format {
+HTML()
+public void visit(final Title title)
+public void visit(final Separator separator)
+public void visit(final Table table)
+
+
+}
+
+class Text extends Format {
+Text()
+public void visit(final Title title)
+public void visit(final Separator separator)
+public void visit(final Table table)
+
+}
+
+Report *-- Element
+Report o-- Format
+
 @enduml
