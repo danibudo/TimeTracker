@@ -315,5 +315,6 @@ public void visit(final Table table)
 
 Report *-- Element
 Report o-- Format
+Report o-- Project
 
 @enduml
