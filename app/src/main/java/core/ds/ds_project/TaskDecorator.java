@@ -16,7 +16,6 @@ public abstract class TaskDecorator extends Task {
      */
     @Override
     public Task getTask() {
-        assert task != null : "Task Null";
         return task;
     }
 
@@ -25,7 +24,6 @@ public abstract class TaskDecorator extends Task {
      * @param taskObject The <code>Task</code> instance.
      */
     public void setTask(final Task taskObject) {
-        assert taskObject != null : "Trying to assign a null task";
         task = taskObject;
     }
 
@@ -89,7 +87,6 @@ public abstract class TaskDecorator extends Task {
      */
     @Override
     void acceptVisitor(final Visitor visitor) {
-        assert visitor != null : "Trying to accept a null visitor";
         visitor.visitTask(task);
     }
 

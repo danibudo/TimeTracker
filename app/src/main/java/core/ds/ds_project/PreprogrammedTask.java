@@ -5,7 +5,6 @@ public class PreprogrammedTask extends TaskDecorator {
 
     PreprogrammedTask(final Task task, final long milliseconds) {
         super(task.getTask());
-        assert null != task : "Getting null task as parameter";
         setIntervals(task.getTask().getIntervals());
         if (getIntervals().size() == 0) {
             Interval interval = new Interval(milliseconds);
