@@ -9,6 +9,7 @@ public class Project extends Activity {
      * belong to this <code>Project</code>.
      */
     private List<Activity> activities;
+    private String description;
 
     /**
      * Creates a new instance of class <code>Project</code>.
@@ -126,5 +127,13 @@ public class Project extends Activity {
             list.addAll(activity.getTasks());
         }
         return list;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 }

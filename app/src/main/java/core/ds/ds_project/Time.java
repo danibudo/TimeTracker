@@ -138,7 +138,7 @@ public final class Time {
      * @param milliseconds date and time in milliseconds
      * @return <code>String</code> with date and time
      */
-    static String getTime(final long milliseconds) {
+    public static String getTime(final long milliseconds) {
         long timeInMilliseconds = milliseconds;
         int hours = (int) getHours(timeInMilliseconds);
         timeInMilliseconds -= setHours(hours);

@@ -2,4 +2,9 @@
     <string name="app_name">TimeTracker</string>
     <string name="edit">Edit</string>
     <string name="createReport">Create report</string>
+    <string name="addTask">Add task</string>
+    <string name="markAsFinished">Mark as finished</string>
+    <string name="rename">Rename</string>
+    <string name="changeDescription">Change description</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -33,7 +33,7 @@ public abstract class Activity implements Serializable {
      * Gets the name of the <code>Activity</code>.
      * @return The activity's name.
      */
-    String getName() {
+    public String getName() {
         return name;
     }
 
