@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TimeTracker</string>
+    <string name="edit">Edit</string>
+    <string name="createReport">Create report</string>
 </resources>
