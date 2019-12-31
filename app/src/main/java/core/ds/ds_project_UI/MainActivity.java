@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.PopupMenu;
@@ -18,7 +19,7 @@ import core.ds.ds_project.R;
 import core.ds.ds_project_UI.ProjectAdapter;
 import core.ds.ds_project_UI.ProjectItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -57,8 +58,27 @@ public class MainActivity extends AppCompatActivity {
     }
     public void showAddActivityPopup(final View v) {
         PopupMenu menu = new PopupMenu(this, v);
+        menu.setOnMenuItemClickListener(this);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.add_activity_menu, menu.getMenu());
+
         menu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.createTask:
+                return true;
+            case R.id.createProject:
+                openDialog();
+            default:
+                return false;
+        }
+    }
+
+    public void openDialog() {
+        CreateProjectDialog projectDialog = new CreateProjectDialog();
+        projectDialog.show(getSupportFragmentManager(),"projectDialog");
     }
 }
