@@ -2,6 +2,7 @@ package core.ds.ds_project_UI;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +18,8 @@ import core.ds.ds_project.R;
 public class CreateProjectDialog extends AppCompatDialogFragment {
 
     private EditText editTextProjectName;
-    private EditText description;
+    private EditText editTextDescription;
+    private ProjectDialogListener listener;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -37,13 +39,32 @@ public class CreateProjectDialog extends AppCompatDialogFragment {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        String projectName = editTextProjectName.getText().toString();
+                        String description = editTextDescription.getText().toString();
+                        listener.createProject(projectName,description);
                     }
                 });
 
         editTextProjectName = view.findViewById(R.id.edit_projectName);
-        editTextProjectName = view.findViewById(R.id.edit_description);
+        editTextDescription = view.findViewById(R.id.edit_description);
 
         return builder.create();
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (ProjectDialogListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + "must implement ProjectDialogListener");
+        }
+    }
+
+    public interface ProjectDialogListener{
+
+        void createProject(String projectName, String projectDescription);
+    }
+
 }

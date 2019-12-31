@@ -19,31 +19,41 @@ import core.ds.ds_project.R;
 import core.ds.ds_project_UI.ProjectAdapter;
 import core.ds.ds_project_UI.ProjectItem;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, CreateProjectDialog.ProjectDialogListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<ProjectItem> activityList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<ProjectItem> projectList = new ArrayList<>();
-        projectList.add(new ProjectItem(new Project(null,"P1")));
-        projectList.add(new ProjectItem(new Project(null,"P2")));
-        projectList.add(new ProjectItem(new Project(null,"P3")));
+        createExampleList();
+        createRecycledView();
 
+        
+    }
+
+
+    public void createExampleList() {
+        activityList = new ArrayList<>();
+        activityList.add(new ProjectItem(new Project(null,"P1")));
+        activityList.add(new ProjectItem(new Project(null,"P2")));
+        activityList.add(new ProjectItem(new Project(null,"P3")));
+    }
+
+    public void createRecycledView() {
         recyclerView = findViewById(R.id.mainProjectsRecyclerView);
         recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new ProjectAdapter(projectList);
+        adapter = new ProjectAdapter(activityList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
-
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -80,5 +90,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void openDialog() {
         CreateProjectDialog projectDialog = new CreateProjectDialog();
         projectDialog.show(getSupportFragmentManager(),"projectDialog");
+    }
+
+    @Override
+    public void createProject(String projectName, String projectDescription) {
+
+        activityList.add(new ProjectItem(new Project(null, projectName))); //Falta la descripcion!!
+
     }
 }
