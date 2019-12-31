@@ -1,4 +1,4 @@
-package core.ds.ds_project;
+package core.ds.ds_project_UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +13,8 @@ import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 
+import core.ds.ds_project.Project;
+import core.ds.ds_project.R;
 import core.ds.ds_project_UI.ProjectAdapter;
 import core.ds.ds_project_UI.ProjectItem;
 
@@ -47,10 +49,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void showPopup(final View v) {
+    public void showProjectPopup(final View v) {
         PopupMenu menu = new PopupMenu(this, v);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.project_menu, menu.getMenu());
+        menu.show();
+    }
+    public void showAddActivityPopup(final View v) {
+        PopupMenu menu = new PopupMenu(this, v);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.add_activity_menu, menu.getMenu());
         menu.show();
     }
 }
