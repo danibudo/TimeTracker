@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         projectList.add(new ProjectItem(new Project(null,"P3")));
 
         recyclerView = findViewById(R.id.mainProjectsRecyclerView);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
         adapter = new ProjectAdapter(projectList);
 
