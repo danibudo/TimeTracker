@@ -16,4 +16,6 @@
     <string name="text">text</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
+    <string name="preprogrammed">Preprogrammed</string>
+    <string name="limited">Limited</string>
 </resources>
