@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeItems">
+        <item>@string/brief</item>
+        <item>@string/detailed</item>
+    </string-array>
+    <string-array name="formatItems">
+        <item>@string/html</item>
+        <item>@string/text</item>
+    </string-array>
+</resources>

@@ -7,4 +7,17 @@
     <string name="rename">Rename</string>
     <string name="changeDescription">Change description</string>
     <string name="delete">Delete</string>
+    <string name="startTime">Start time</string>
+    <string name="endTime">End time</string>
+    <string name="rootActivities">Root activities</string>
+    <string name="brief">brief</string>
+    <string name="detailed">detailed</string>
+    <string name="html">HTML</string>
+    <string name="text">text</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="preprogrammed">Preprogrammed</string>
+    <string name="limited">Limited</string>
+    <string name="project">Project</string>
+    <string name="task">Task</string>
 </resources>
