@@ -1,7 +1,7 @@
 package core.ds.ds_project;
 
 public class TaskImpl extends Task {
-    TaskImpl(final Project ownerProject, final String taskName) {
+    public TaskImpl(final Project ownerProject, final String taskName) {
         setOwnerProject(ownerProject);
         setName(taskName);
         setDuration(0);

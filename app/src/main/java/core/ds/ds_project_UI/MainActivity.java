@@ -9,22 +9,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 
 import core.ds.ds_project.Project;
 import core.ds.ds_project.R;
-import core.ds.ds_project_UI.ProjectAdapter;
-import core.ds.ds_project_UI.ProjectItem;
+import core.ds.ds_project.TaskImpl;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, CreateProjectDialog.ProjectDialogListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<ProjectItem> activityList;
+    private ArrayList<ActivityItem> activities;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -39,17 +37,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
     public void createExampleList() {
-        activityList = new ArrayList<>();
-        activityList.add(new ProjectItem(new Project(null,"P1")));
-        activityList.add(new ProjectItem(new Project(null,"P2")));
-        activityList.add(new ProjectItem(new Project(null,"P3")));
+        activities = new ArrayList<>();
+        activities.add(new ActivityItem(new Project(null,"P1")));
+        activities.add(new ActivityItem(new Project(null,"P2")));
+        activities.add(new ActivityItem(new Project(null,"P3")));
+        activities.add(new ActivityItem(new TaskImpl(null,"T1")));
     }
 
     public void createRecycledView() {
         recyclerView = findViewById(R.id.mainProjectsRecyclerView);
         recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new ProjectAdapter(activityList);
+        adapter = new ActivityAdapter(activities);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     public void createProject(String projectName, String projectDescription) {
 
-        activityList.add(new ProjectItem(new Project(null, projectName))); //Falta la descripcion!!
+        activities.add(new ActivityItem(new Project(null, projectName))); //Falta la descripcion!!
 
     }
 }
