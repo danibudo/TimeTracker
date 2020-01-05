@@ -22,6 +22,16 @@ public class ActivityAdapter extends RecyclerView.Adapter {
 
     private ArrayList<ActivityItem> activities;
 
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public ActivityAdapter(ArrayList<ActivityItem> activities) {
         this.activities = activities;
     }
@@ -45,7 +55,7 @@ public class ActivityAdapter extends RecyclerView.Adapter {
 
         if (viewType == 0) { //Project
             view = layoutInflater.inflate(R.layout.project_item, parent, false);
-            return new ProjectViewHolder(view);
+            return new ProjectViewHolder(view,listener);
         }
 
         view = layoutInflater.inflate(R.layout.task_item, parent, false);
@@ -83,13 +93,26 @@ public class ActivityAdapter extends RecyclerView.Adapter {
         ImageView projectIcon;
         ImageButton projectButton;
 
-        public ProjectViewHolder(@NonNull View itemView) {
+        public ProjectViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             projectName = itemView.findViewById(R.id.projectName);
             projectTotalTime = itemView.findViewById(R.id.projectTotalTime);
             projectIcon = itemView.findViewById(R.id.projectIcon);
             projectButton = itemView.findViewById(R.id.projectButton);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION); {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -112,4 +135,5 @@ public class ActivityAdapter extends RecyclerView.Adapter {
 
         }
     }
+
 }

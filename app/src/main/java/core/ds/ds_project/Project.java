@@ -109,7 +109,7 @@ public class Project extends Activity {
      * Clones the <code>List</code> of activities and returns it.
      * @return The copy of the activity list.
      */
-    List<Activity> getActivities() {
+    public List<Activity> getActivities() {
         Object copy;
         copy = ((ArrayList<Activity>) activities).clone();
         //noinspection unchecked

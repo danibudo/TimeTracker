@@ -36,7 +36,7 @@ public abstract class Task extends Activity {
     public final void removeInterval(final Interval interval) {
         intervals.remove(interval);
     }
-    final List<Interval> getIntervals() {
+    public final List<Interval> getIntervals() {
         assert invariant() : "Invalid Task";
         return intervals;
     }

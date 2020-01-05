@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +14,9 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import core.ds.ds_project.Activity;
 import core.ds.ds_project.Project;
 import core.ds.ds_project.R;
 import core.ds.ds_project.TaskImpl;
@@ -20,7 +24,7 @@ import core.ds.ds_project.TaskImpl;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, CreateProjectDialog.ProjectDialogListener {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private ActivityAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ActivityItem> activities;
 
@@ -28,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        activities = intent.getParcelableArrayListExtra("Activity items");
 
         createExampleList();
         createRecycledView();
@@ -39,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void createExampleList() {
         activities = new ArrayList<>();
         activities.add(new ActivityItem(new Project(null,"P1")));
+
+        activities.add(new ActivityItem(new Project(null,"P1")));
+
+
+
         activities.add(new ActivityItem(new Project(null,"P2")));
         activities.add(new ActivityItem(new Project(null,"P3")));
         activities.add(new ActivityItem(new TaskImpl(null,"T1")));
@@ -52,7 +64,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new ActivityAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent intent = new Intent(getBaseContext(),MainActivity.class);
+                intent.putParcelableArrayListExtra("projectItems", (ArrayList<? extends Parcelable>) activities.get(position).getActivityItems());
+
+            }
+        });
     }
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -97,4 +120,5 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         activities.add(new ActivityItem(new Project(null, projectName))); //Falta la descripcion!!
 
     }
+
 }
